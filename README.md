@@ -21,7 +21,7 @@ Run a Neo4j container :
 $ docker run --detach --publish 7474:7474 --volume ~/neo4j/data:/data neo4j
 ```
 
-In your browser, access [Neo4j Web console](http://192.168.99.100/7474) and change your neo4j account password in order to activate it.
+In your browser, access [Neo4j Web console](http://192.168.99.100:7474) and change your neo4j account password in order to activate it.
 
 Add some data from the Neo4j Web console :
 
