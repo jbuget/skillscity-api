@@ -3,13 +3,20 @@
 const Boom = require('boom');
 const Request = require('request');
 const Neo4j = require('neo4j');
-const db = new Neo4j.GraphDatabase('http://neo4j:password@docker:32779');
+const Config = require('config');
+
+const db = new Neo4j.GraphDatabase(
+    Config.get('db.scheme') + "://" +
+    Config.get('db.username') + ":" +
+    Config.get('db.password') + "@" +
+    Config.get('db.host') + ":" +
+    Config.get('db.port')
+);
 
 /*
 Request.debug = true;
 require('request-debug')(Request);
 */
-
 
 let internals = {};
 

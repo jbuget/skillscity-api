@@ -2,13 +2,13 @@ const Code = require('code');   // assertion library
 const Lab = require('lab');
 const lab = exports.lab = Lab.script();
 
-const server = require('../server');
+const server = require('../app/server');
 
 lab.experiment("Basic HTTP Tests", function() {
 
-    lab.test('/octos', (done) => {
+    lab.test('/people', (done) => {
         var options = {
-            method: "GET", url: "/octos"
+            method: "GET", url: "/people"
         };
         server.inject(options, function(response) {
             Code.expect(response.statusCode).to.equal(200);
