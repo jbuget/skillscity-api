@@ -10,7 +10,9 @@ console.log('NODE_ENV: ' + Config.util.getEnv('NODE_ENV'));
 
 const server = new Hapi.Server();
 
-server.connection({port: 3000});
+var serverPort = process.env.PORT || 3000;
+
+server.connection({port: serverPort});
 
 server.route(Routes);
 
