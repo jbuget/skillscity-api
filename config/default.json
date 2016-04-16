@@ -5,7 +5,7 @@
   "db": {
     "scheme": "http",
     "host": "docker",
-    "port": 32779,
+    "port": 7474,
     "username": "neo4j",
     "password": "password"
   }

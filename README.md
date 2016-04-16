@@ -1,5 +1,110 @@
-# stacks-api
+# Stacks API
 
-```console
+## Installation
+
+### 1/ Prerequesites
+
+- Install [Docker](https://docs.docker.com/)
+- Install [NodeJS 5.8+](https://nodejs.org/)
+
+### 2/ Setup a Neo4j database via Docker
+
+Retrieve the [Neo4j Docker image](https://hub.docker.com/_/neo4j/) :
+
+```
+$ docker pull neo4j
+```
+
+Run a Neo4j container :
+
+```
 $ docker run --detach --publish 7474:7474 --volume ~/neo4j/data:/data neo4j
 ```
+
+In your browser, access [Neo4j Web console](http://192.168.99.100/7474) and change your neo4j account password in order to activate it.
+
+Add some data from the Neo4j Web console :
+
+```
+> CREATE (n:Person { nickname: "JDO",first_name: "John",last_name: "Doe",mobile_number: "0612345678",email: "jdoe@mail.com",tiny_photo: "http://s3.amazonaws.com/askbob/users/photos/224/tiny/jdo_profile_medium.jpg?1414161627",photo: "http://s3.amazonaws.com/askbob/users/photos/224/preview/jdo_profile_medium.jpg?1414161627",lob: "WEBF",manager: "FHI",entry_date: "2013-02-04",leaving_date: null,level: "3 CS",job: "Test account" })
+```
+
+
+### 3/ Setup the project
+
+Retrieve the project sources :
+
+```
+$ git clone git@github.com:jbuget/stacks-api.git && cd stacks-api
+```
+
+Retrieve the NPM dependencies :
+
+```
+$ npm install
+```
+
+Launch the tests :
+
+```
+$ npm test
+```
+
+Run the application :
+
+```
+$ npm start
+```
+
+Check that the application is up : in your browser access [http://localhost:3000/people](http://localhost:3000/people).
+
+Or in a console :
+
+```
+$ curl -G 'http://localhost:3000/people'
+```
+
+
+## Managing environments
+
+We use [node-config](https://github.com/lorenwest/node-config) plugin to manage multi-environment runtime.
+
+In particular, we manage environment specific configuration (DB, SMTP, variables, etc.) via [NODE_ENV environment variable](https://github.com/lorenwest/node-config/wiki/Environment-Variables#node_env).
+
+If NODE_ENV variable is not defined, then ```config/default.json``` configuration file will be used.
+
+If it is defined (known values are 'stage' or 'production'), then the corresponding environment configuration file (ex: ```config/stage.json```) will be used.
+
+**Warning!** If a ```config/local.json``` file is defined, it will be used, even if the NODE_ENV variable is set, according to the [node-config file load order](https://github.com/lorenwest/node-config/wiki/Configuration-Files#file-load-order).
+
+
+## Testing
+
+Todo
+
+
+## Debugging
+
+### HTTP REST requests
+
+We use [node-request](https://github.com/request/request) plugin to make HTTP requests.
+
+To see DEBUG traces, just declare ```Request.debug = true``` as following :
+```node
+const Request = require('request');
+Request.debug = true;
+```
+
+You can also use the [request-debug](https://github.com/request/request-debug) plugin
+
+```
+const Request = require('request');
+require('request-debug')(Request);
+```
+
+[Other techniques](https://github.com/request/request#debugging) are described in the offical documentation.
+
+
+## Release & deployment
+
+Todo

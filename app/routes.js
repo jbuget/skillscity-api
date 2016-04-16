@@ -13,11 +13,6 @@ const db = new Neo4j.GraphDatabase(
     Config.get('db.port')
 );
 
-/*
-Request.debug = true;
-require('request-debug')(Request);
-*/
-
 let internals = {};
 
 internals.sayHelloWorld = function (request, reply) {
