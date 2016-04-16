@@ -1,6 +1,6 @@
 # Stacks API
 
-[![Heroku](https://floating-shore-97213.herokuapp.com/?app=floating-shore-97213)]
+[![Heroku](https://heroku-badge.herokuapp.com/?app=floating-shore-97213)]
 [![Build Status](https://travis-ci.org/jbuget/stacks-api.svg?branch=master)](https://travis-ci.org/jbuget/stacks-api)
 
 ## Installation
