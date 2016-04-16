@@ -65,6 +65,24 @@ $ curl -G 'http://localhost:3000/people'
 ```
 
 
+## Anatomy of the application
+
+```
+app                     → Application sources
+ └ routes.js            → Routes definition
+ └ server.js            → Hapi server definition
+config                  → Configurations files
+ └ default.json         → Default configuration file
+ └ {environment}.json   → Environment specific configuration file, based on NODE_ENV environment variable
+ └ local.json           → (optionnal) Local configuration file
+node_modules            → Downloaded Node dependencies
+test                    → Source folder for unit or functional tests
+.gitignore              → Git ignored files configuration
+package.json            → Node scripts & dependencies declaration
+README.md               → Project documentation
+```
+
+
 ## Managing environments
 
 We use [node-config](https://github.com/lorenwest/node-config) plugin to manage multi-environment runtime.

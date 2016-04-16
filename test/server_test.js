@@ -6,13 +6,10 @@ const server = require('../app/server');
 
 lab.experiment("Basic HTTP Tests", function() {
 
-    lab.test('/people', (done) => {
-        var options = {
-            method: "GET", url: "/people"
-        };
-        server.inject(options, function(response) {
+    lab.test('/', (done) => {
+        server.inject({method: "GET", url: "/"}, function(response) {
             Code.expect(response.statusCode).to.equal(200);
-            Code.expect(response.result).to.have.length(4);
+            Code.expect(response.result).to.equal('Hello, world!');
             done();
         });
     });
