@@ -67,6 +67,11 @@ Or in a console :
 $ curl -G 'http://localhost:3000/people'
 ```
 
+### (optionnal) 4/ Setup Travis & Heroku CLI tools
+
+- Install the [Travis CI CLI](https://github.com/travis-ci/travis.rb#installation)
+- Install the [Heroku Toolbelt](https://toolbelt.heroku.com/)
+
 
 ## Anatomy of the application
 
@@ -81,7 +86,9 @@ config                  → Configurations files
 node_modules            → Downloaded Node dependencies
 test                    → Source folder for unit or functional tests
 .gitignore              → Git ignored files configuration
+.travis.yml             → Travis CI configuration file
 package.json            → Node scripts & dependencies declaration
+Procfile                → Heroku configuration file
 README.md               → Project documentation
 ```
 
