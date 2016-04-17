@@ -27,9 +27,13 @@
     "request": "^2.71.0"
   },
   "devDependencies": {
+    "chai": "^3.5.0",
     "code": "^2.2.0",
     "lab": "^10.3.1",
     "nodemon": "^1.9.1",
-    "request-debug": "^0.2.0"
+    "proxyquire": "^1.7.4",
+    "request-debug": "^0.2.0",
+    "sinon": "^1.17.3",
+    "sinon-chai": "^2.8.0"
   }
 }
