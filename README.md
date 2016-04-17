@@ -77,8 +77,12 @@ $ curl -G 'http://localhost:3000/people'
 
 ```
 app                     → Application sources
+ └ controllers          → Controller classes defining routes, handlers and requests/responses schema validation
+ └ models               → Model objects containing business and persistance intelligence
+ └ db.js                → Database definition
  └ routes.js            → Routes definition
  └ server.js            → Hapi server definition
+blueprints              → API Blueprint specifications
 config                  → Configurations files
  └ default.json         → Default configuration file
  └ {environment}.json   → Environment specific configuration file, based on NODE_ENV environment variable
