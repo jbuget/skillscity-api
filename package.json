@@ -4,7 +4,7 @@
   "description": "The Stacks platform API",
   "main": "index.js",
   "scripts": {
-    "start": "./node_modules/nodemon/bin/nodemon.js app/index.js",
+    "start": "./node_modules/nodemon/bin/nodemon.js app/server.js",
     "test": "./node_modules/lab/bin/lab"
   },
   "repository": {
