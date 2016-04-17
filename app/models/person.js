@@ -10,7 +10,7 @@ module.exports.empty = function (callback) {
 
 module.exports.createList = function(people, callback){
     db.cypher({
-        query: 'UNWIND ' + people + ' AS people CREATE (p:Person) SET p = people'
+        query: 'UNWIND ' + people + ' AS people CREATE (p:Person) SET p = people RETURN p'
     }, callback);
 };
 

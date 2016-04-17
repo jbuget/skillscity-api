@@ -1,12 +1,7 @@
 'use strict';
 
-const Hello = require('./controllers/hello');
-const People = require('./controllers/people');
+const hello = require('./controllers/hello').routes;
+const people = require('./controllers/people').routes;
+const projects = require('./controllers/projects').routes;
 
-module.exports = [
-    {path: '/', method: 'GET', handler: Hello.sayHelloWorld},
-    {path: '/hello', method: 'GET', handler: Hello.sayHelloWorld},
-    {path: '/hello/{name}', method: 'GET', handler: Hello.sayHello},
-    {path: '/people', method: 'GET', handler: People.getPeople},
-    {path: '/people', method: 'POST', handler: People.synchronizePeople}
-];
+module.exports = [].concat(hello, people, projects);

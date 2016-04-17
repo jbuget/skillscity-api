@@ -1,10 +1,16 @@
 'use strict';
 
-module.exports.sayHelloWorld = function (request, reply) {
+let internals = {};
+
+internals.sayHelloWorld = function (request, reply) {
     reply('Hello, world!');
 };
 
-module.exports.sayHello = function (request, reply) {
+internals.sayHello = function (request, reply) {
     reply('Hello, ' + encodeURIComponent(request.params.name) + '!');
 };
 
+module.exports.routes = [
+    {path: '/hello', method: 'GET', handler: internals.sayHelloWorld},
+    {path: '/hello/{name}', method: 'GET', handler: internals.sayHello}
+];

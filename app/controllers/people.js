@@ -13,33 +13,38 @@ internals.retrievePeople = function (request, reply) {
         if (!error && response.statusCode == 200) {
             internals.persistPeople(request, reply, people);
         } else {
-            Boom.internal(error);
+            Boom.wrap(error);
         }
     });
 };
 
 internals.persistPeople = function (request, reply, people) {
-    Person.createList(people, function (err) {
-        if (err) throw err;
-        reply('Yeah!');
+    Person.createList(people, function (err, results) {
+        if (err) Boom.wrap(err);
+        return reply(results);
     });
 };
 
-module.exports.getPeople = function (request, reply) {
+internals.getPeople = function (request, reply) {
     Person.list(function (err, results) {
-        if (err) throw err;
+        if (err) Boom.wrap(err);
         var result = results[0];
         if (!result) {
-            reply('No user found.');
+            return reply('No user found.');
         } else {
-            reply(results);
+            return reply(results);
         }
     });
 };
 
-module.exports.synchronizePeople = function (request, reply) {
+internals.synchronizePeople = function (request, reply) {
     Person.empty(function (err) {
-        if (err) throw err;
+        if (err) Boom.wrap(err);
         internals.retrievePeople(request, reply);
     });
 };
+
+module.exports.routes = [
+    {path: '/people', method: 'GET', handler: internals.getPeople},
+    {path: '/people', method: 'POST', handler: internals.synchronizePeople}
+];
