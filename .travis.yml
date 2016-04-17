@@ -1,6 +1,8 @@
 language: node_js
 node_js:
-- '5'
+  - '5'
+services:
+  - neo4j
 deploy:
   provider: heroku
   app: floating-shore-97213
