@@ -30,7 +30,7 @@ module.exports.list = function (callback) {
     }, callback);
 };
 
-module.exports.remove = function (projectId, callback) {
+module.exports.del = function (projectId, callback) {
     db.cypher({
         query: 'MATCH (p:Project {id: ' + projectId + '}) DELETE p'
     }, callback);

@@ -10,99 +10,109 @@ Chai.use(require('sinon-chai'));
 
 const describe = lab.describe;
 const it = lab.it;
-const afterEach = lab.after;
+const before = lab.before;
+const afterEach = lab.afterEach;
 
 const Boom = require('boom');
 const Project = require('../../app/models/project');
-const Projects = Proxyquire('../../app/controllers/projects', {
-    'boom': Boom,
-    '../models/project': Project
-});
 
 const Server = require('../../app/server');
 
-describe('#listProjects', () => {
+describe('Projects API', () => {
 
-    let request = {},
-        reply = Sinon.spy();
-
-    afterEach((done) => {
-        reply.reset();
-        if (Project.list.restore) {
-            Project.list.restore();
-        }
+    before((done) => {
+        Proxyquire('../../app/controllers/projects', {
+            'boom': Boom,
+            '../models/project': Project
+        });
         done();
     });
 
-    it('should return all the projects (2)', (done) => {
-        // given
-        const data = [
-            {name: 'p1', client: 'c1'},
-            {name: 'p2', client: 'c2'},
-            {name: 'p3', client: 'c3'}
-        ];
-        Sinon.stub(Project, 'list', function (callback) {
-            callback(null, data);
-        });
+    describe('GET /projects', () => {
 
-        //when
-        Server.inject({method: "GET", url: "/projects"}, function (response) {
-
-            // then
-            response.statusCode.should.equal(200);
-            response.result.should.equal(data);
-            if (Project.list.restore) {
+        afterEach((done) => {
             Project.list.restore();
-            }
             done();
         });
-    });
 
-    it('should return all the projects', (done) => {
-        // given
-        const data = [
-            {name: 'p1', client: 'c1'},
-            {name: 'p2', client: 'c2'},
-            {name: 'p3', client: 'c3'}
-        ];
-        Sinon.stub(Project, 'list', function (callback) {
-            callback(null, data);
+        it('should return all the projects', (done) => {
+            // given
+            const projects = [
+                {id: 1, name: 'p1', client: 'c1'},
+                {id: 2, name: 'p2', client: 'c2'},
+                {id: 3, name: 'p3', client: 'c3'}
+            ];
+            Sinon.stub(Project, 'list', function (callback) {
+                callback(null, projects);
+            });
+
+            //when
+            Server.inject({method: "GET", url: "/projects"}, function (response) {
+
+                // then
+                response.statusCode.should.equal(200);
+                response.result.should.equal(projects);
+                done();
+            });
         });
 
-        // when
-        Projects.listProjects(request, reply);
+        it('should return an internal server error in case of exception', (done) => {
+            // given
+            Sinon.stub(Project, 'list', function (callback) {
+                callback(new Error('Some error'));
+            });
 
-        // then
-        reply.should.have.been.calledWith(data);
-        if (Project.list.restore) {
-            Project.list.restore();
-        }
-        done();
+            // when
+            Server.inject({method: "GET", url: "/projects"}, function (response) {
+
+                // then
+                response.statusCode.should.equal(500);
+                done();
+            });
+        })
+
     });
 
-    it('should return a Boom wrapping exception in case of error', (done) => {
-        // given
-        const deep_error = new Error('Soooo dep!');
-        Sinon.stub(Project, 'list', function (callback) {
-            callback(deep_error, null);
+    describe('GET /project/{projectId}', () => {
+
+        afterEach((done) => {
+            Project.get.restore();
+            done();
         });
-        const boom_wrap = Sinon.spy(Boom, 'wrap');
 
-        // when
-        Projects.listProjects(request, reply);
+        it('should return the project by its ID', (done) => {
+            // given
+            const project = {id: 123, name: 'project_name', client: 'client_name'};
+            Sinon.stub(Project, 'get', function (projectId, callback) {
+                callback(null, project);
+            });
 
-        // then
-        boom_wrap.should.have.been.calledWith(deep_error);
-        reply.should.have.been.called;
-        if (Project.list.restore) {
-            Project.list.restore();
-        }
-        done();
-    })
+            // when
+            Server.inject({method: "GET", url: "/projects/123"}, function (response) {
+
+                // then
+                response.statusCode.should.equal(200);
+                response.result.should.equal(project);
+                done();
+            });
+        });
+
+        it('should return an internal server error in case of exception', (done) => {
+            // given
+            Sinon.stub(Project, 'get', function (projectId, callback) {
+                callback(new Error('Some error'));
+            });
+
+            // when
+            Server.inject({method: "GET", url: "/projects/123"}, function (response) {
+
+                // then
+                response.statusCode.should.equal(500);
+                done();
+            });
+        })
+
+    });
 
 });
 
-describe('#getProject', () => {
-
-
-});

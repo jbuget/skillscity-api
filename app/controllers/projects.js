@@ -8,38 +8,46 @@ module.exports.listProjects = function (request, reply) {
         if (err) {
             return reply(Boom.wrap(err));
         }
-        return reply(results);
+        reply(results);
     });
 };
 
 module.exports.getProject = function (request, reply) {
     var projectId = request.params.projectId;
     Project.get(projectId, function (err, results) {
-        if (err) Boom.wrap(err);
-        return reply(results);
+        if (err) {
+            return reply(Boom.wrap(err));
+        }
+        reply(results);
     });
 };
 
 module.exports.createProject = function (request, reply) {
     var project = request.payload;
     Project.persist(project, function (err, results) {
-        if (err) Boom.wrap(err);
-        return reply(results);
+        if (err) {
+            return reply(Boom.wrap(err));
+        }
+        reply(results);
     });
 };
 
 module.exports.updateProject = function (request, reply) {
     var project = request.payload;
     Project.merge(project, function (err, results) {
-        if (err) Boom.wrap(err);
-        return reply(results);
+        if (err) {
+            return reply(Boom.wrap(err));
+        }
+        reply(results);
     });
 };
 
 module.exports.deleteProject = function (request, reply) {
     var projectId = request.params.projectId;
-    Project.remove(projectId, function (err, results) {
-        if (err) Boom.wrap(err);
-        return reply().code(204);
+    Project.del(projectId, function (err, results) {
+        if (err) {
+            return reply(Boom.wrap(err));
+        }
+        reply().code(204);
     });
 };
