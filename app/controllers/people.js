@@ -4,9 +4,7 @@ const Boom = require('boom');
 const Request = require('request');
 const Person = require('../models/person');
 
-const internals = {};
-
-internals.retrievePeople = function (request, reply) {
+module.exports.retrievePeople = function (request, reply) {
     const endpoint = 'http://askbob.octo.com/api/v1/vqZe12GQsvPvQUNSjW5xceiKh/people.json';
     Request.get({ url: endpoint, json: true }, function (error, response, body) {
         const people = JSON.stringify(body.items).replace(/\"([^(\")"]+)\":/g, '$1:');
@@ -18,7 +16,7 @@ internals.retrievePeople = function (request, reply) {
     });
 };
 
-internals.persistPeople = function (request, reply, people) {
+module.exports.persistPeople = function (request, reply, people) {
     Person.createList(people, function (err, results) {
         if (err) {
             Boom.wrap(err);
@@ -27,7 +25,7 @@ internals.persistPeople = function (request, reply, people) {
     });
 };
 
-internals.getPeople = function (request, reply) {
+module.exports.getPeople = function (request, reply) {
     Person.list(function (err, results) {
         if (err) {
             Boom.wrap(err);
@@ -40,7 +38,7 @@ internals.getPeople = function (request, reply) {
     });
 };
 
-internals.synchronizePeople = function (request, reply) {
+module.exports.synchronizePeople = function (request, reply) {
     Person.empty(function (err) {
         if (err) {
             Boom.wrap(err);
@@ -48,8 +46,3 @@ internals.synchronizePeople = function (request, reply) {
         internals.retrievePeople(request, reply);
     });
 };
-
-module.exports.routes = [
-    { path: '/people', method: 'GET', handler: internals.getPeople },
-    { path: '/people', method: 'POST', handler: internals.synchronizePeople }
-];

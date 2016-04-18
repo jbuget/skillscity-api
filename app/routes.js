@@ -1,11 +1,27 @@
 'use strict';
 
-const hello = require('./controllers/hello').routes;
-const people = require('./controllers/people').routes;
-const projects = require('./controllers/projects').routes;
+const Hello = require('./controllers/hello');
+const People = require('./controllers/people');
+const Projects = require('./controllers/projects');
 
-module.exports = [{
-    path: '/', method: 'GET', handler: function (request, reply) {
-        reply('It works!');
-    }
-}].concat(hello, people, projects);
+const internals = {};
+
+internals.index = function (request, reply) {
+    reply('It works!');
+};
+
+module.exports = [
+    { path: '/', method: 'GET', handler: internals.index },
+
+    { path: '/hello', method: 'GET', handler: Hello.sayHelloWorld },
+    { path: '/hello/{name}', method: 'GET', handler: Hello.sayHello },
+
+    { path: '/people', method: 'GET', handler: People.getPeople },
+    { path: '/people', method: 'POST', handler: People.synchronizePeople },
+
+    { path: '/projects', method: 'GET', handler: Projects.listProjects },
+    { path: '/projects', method: 'POST', handler: Projects.createProject },
+    { path: '/projects/{projectId}', method: 'GET', handler: Projects.getProject },
+    { path: '/projects/{projectId}', method: 'POST', handler: Projects.updateProject },
+    { path: '/projects/{projectId}', method: 'DELETE', handler: Projects.deleteProject }
+];

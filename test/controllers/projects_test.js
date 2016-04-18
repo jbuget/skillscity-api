@@ -1,90 +1,108 @@
 'use strict';
 
-const proxyquire = require('proxyquire');
+const Proxyquire = require('proxyquire');
 const Lab = require('lab');
 const lab = exports.lab = Lab.script();
-const describe = lab.describe;
-const it = lab.it;
-const before = lab.before;
-const after = lab.after;
-
+const Sinon = require('sinon');
 const Chai = require('chai');
 Chai.should();
+Chai.use(require('sinon-chai'));
 
-const server = require('../../app/server');
+const describe = lab.describe;
+const it = lab.it;
+const afterEach = lab.after;
 
-describe('/projects', () => {
+const Boom = require('boom');
+const Project = require('../../app/models/project');
+const Projects = Proxyquire('../../app/controllers/projects', {
+    'boom': Boom,
+    '../models/project': Project
+});
 
-/*
-    describe('GET /projects', () => {
-        it('should fetch all projects', (done) => {
-            // given
-            var projectStub = {};
-            var projects = proxyquire('../../app/controllers/projects', { '../models/project': projectStub });
+const Server = require('../../app/server');
 
+describe('#listProjects', () => {
 
-            // when
-            server.inject({method: "GET", url: "/projects"}, function(response) {
-                done();
-            });
-        });
+    let request = {},
+        reply = Sinon.spy();
+
+    afterEach((done) => {
+        reply.reset();
+        if (Project.list.restore) {
+            Project.list.restore();
+        }
+        done();
     });
-*/
 
-/*
-    describe('POST /projects', () => {
-        it('should create a new project', (done) => {
-            // given
+    it('should return all the projects (2)', (done) => {
+        // given
+        const data = [
+            {name: 'p1', client: 'c1'},
+            {name: 'p2', client: 'c2'},
+            {name: 'p3', client: 'c3'}
+        ];
+        Sinon.stub(Project, 'list', function (callback) {
+            callback(null, data);
+        });
 
-            // when
+        //when
+        Server.inject({method: "GET", url: "/projects"}, function (response) {
 
             // then
-            server.inject({method: "POST", url: "/projects"}, function(response) {
-                done();
-            });
+            response.statusCode.should.equal(200);
+            response.result.should.equal(data);
+            if (Project.list.restore) {
+            Project.list.restore();
+            }
+            done();
         });
     });
 
-*/
-    describe('GET /projects/{projectId}', () => {
-        it('should fetch a project', (done) => {
-            // given
-
-            // when
-            server.inject({method: "GET", url: "/projects/123"}, function(response) {
-
-                // then
-                done();
-            });
+    it('should return all the projects', (done) => {
+        // given
+        const data = [
+            {name: 'p1', client: 'c1'},
+            {name: 'p2', client: 'c2'},
+            {name: 'p3', client: 'c3'}
+        ];
+        Sinon.stub(Project, 'list', function (callback) {
+            callback(null, data);
         });
+
+        // when
+        Projects.listProjects(request, reply);
+
+        // then
+        reply.should.have.been.calledWith(data);
+        if (Project.list.restore) {
+            Project.list.restore();
+        }
+        done();
     });
 
-/*
-    describe('POST /projects/{projectId}', () => {
-        it('should update a project', (done) => {
-            // given
-
-            // when
-            server.inject({method: "POST", url: "/projects/123"}, function(response) {
-
-                // then
-                done();
-            });
+    it('should return a Boom wrapping exception in case of error', (done) => {
+        // given
+        const deep_error = new Error('Soooo dep!');
+        Sinon.stub(Project, 'list', function (callback) {
+            callback(deep_error, null);
         });
-    });
-*/
+        const boom_wrap = Sinon.spy(Boom, 'wrap');
 
-    describe('DELETE /projects/{projectId}', () => {
-        it('should delete a project', (done) => {
-            // given
+        // when
+        Projects.listProjects(request, reply);
 
-            // when
-            server.inject({method: "DELETE", url: "/projects/123"}, function(response) {
+        // then
+        boom_wrap.should.have.been.calledWith(deep_error);
+        reply.should.have.been.called;
+        if (Project.list.restore) {
+            Project.list.restore();
+        }
+        done();
+    })
 
-                // then
-                done();
-            });
-        });
-    });
+});
+
+describe('#getProject', () => {
+
 
 });
