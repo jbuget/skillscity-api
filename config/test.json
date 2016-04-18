@@ -1,0 +1,12 @@
+{
+  "env": {
+    "name": "test"
+  },
+  "db": {
+    "scheme": "http",
+    "host": "docker",
+    "port": 7474,
+    "username": "neo4j",
+    "password": "password"
+  }
+}

@@ -3,7 +3,7 @@
 const Boom = require('boom');
 const Project = require('../models/project');
 
-let internals = {};
+const internals = {};
 
 internals.listProjects = function (request, reply) {
     Project.list(function (err, results) {
@@ -45,9 +45,9 @@ internals.deleteProject = function (request, reply) {
 };
 
 module.exports.routes = [
-    {path: '/projects', method: 'GET', handler: internals.listProjects},
-    {path: '/projects', method: 'POST', handler: internals.createProject},
-    {path: '/projects/{projectId}', method: 'GET', handler: internals.getProject},
-    {path: '/projects/{projectId}', method: 'POST', handler: internals.updateProject},
-    {path: '/projects/{projectId}', method: 'DELETE', handler: internals.deleteProject}
+    { path: '/projects', method: 'GET', handler: internals.listProjects },
+    { path: '/projects', method: 'POST', handler: internals.createProject },
+    { path: '/projects/{projectId}', method: 'GET', handler: internals.getProject },
+    { path: '/projects/{projectId}', method: 'POST', handler: internals.updateProject },
+    { path: '/projects/{projectId}', method: 'DELETE', handler: internals.deleteProject }
 ];

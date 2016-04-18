@@ -35,4 +35,5 @@ node_modules
 .name
 .idea/**/*
 *.iml
+/build
 config/local.json
