@@ -25,7 +25,7 @@ describe('Projects API', () => {
             done();
         });
 
-        it('should return all the projects', (done) => {
+        it('should return all the people', (done) => {
             // given
             const people = [
                 { nickname: 'Batman', firstName: 'Bruce', lastName: 'Wayne' },
@@ -46,9 +46,48 @@ describe('Projects API', () => {
                 done();
             });
         });
+
+        it('should return an internal server error in case of exception', (done) => {
+            // given
+            Sinon.stub(Person, 'list', (callback) => {
+
+                callback(new Error('Some error'));
+            });
+
+            // when
+            Server.inject({ method: 'GET', url: '/people' }, (response) => {
+
+                // then
+                response.statusCode.should.equal(500);
+                done();
+            });
+        });
     });
 
     describe('POST /people', () => {
+
+/*
+        it('should synchronize people from AskBob', (done) => {
+            // given
+            Sinon.stub(Person, 'empty', (callback) => {
+
+                callback();
+            });
+            Sinon.stub(Person, 'list', (callback) => {
+
+                callback(null, people);
+            });
+
+            //when
+            Server.inject({ method: 'GET', url: '/people' }, (response) => {
+
+                // then
+                response.statusCode.should.equal(200);
+                response.result.should.equal(people);
+                done();
+            });
+        });
+*/
 
     });
 

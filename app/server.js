@@ -6,8 +6,6 @@ const Blipp = require('blipp');
 const Config = require('config');
 const Routes = require('./routes');
 
-console.log('NODE_ENV: ' + Config.util.getEnv('NODE_ENV'));
-
 const server = new Hapi.Server();
 
 const serverPort = process.env.PORT || 3000;
@@ -33,7 +31,7 @@ server.register([{
 }], (err) => {
 
     if (err) {
-        throw err; // something bad happened loading the plugin
+        throw err;
     }
     server.start((err) => {
 
