@@ -35,15 +35,13 @@ server.register([{
     if (err) {
         throw err; // something bad happened loading the plugin
     }
-    if (!module.parent) {
-        server.start((err) => {
+    server.start((err) => {
 
-            if (err) {
-                throw err;
-            }
-            server.log('info', 'Server running on ' + Config.get('env.name') + ' environment at: ' + server.info.uri);
-        });
-    }
+        if (err) {
+            throw err;
+        }
+        server.log('info', 'Server running on ' + Config.get('env.name') + ' environment at: ' + server.info.uri);
+    });
 });
 
 module.exports = server;
