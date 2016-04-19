@@ -86,11 +86,13 @@ app                     → Application sources
  └ routes.js            → Routes definition
  └ server.js            → Hapi server definition
 blueprints              → API Blueprint specifications
+build                   → (unversionned) Generated sources or output
+ └ coverage.html        → HTML report of Lab testing tool (tests status + code coverage + linting results)
 config                  → Configurations files
  └ default.json         → Default configuration file
  └ {environment}.json   → Environment specific configuration file, based on NODE_ENV environment variable
- └ local.json           → (optionnal) Local configuration file
-node_modules            → Downloaded Node dependencies
+ └ local.json           → (unversionned) Local configuration file
+node_modules            → (unversionned) Downloaded Node dependencies
 test                    → Source folder for unit or functional tests
 .gitignore              → Git ignored files configuration
 .travis.yml             → Travis CI configuration file
