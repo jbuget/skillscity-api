@@ -85,7 +85,6 @@ app                     → Application sources
  └ db.js                → Database definition
  └ routes.js            → Routes definition
  └ server.js            → Hapi server definition
-blueprints              → API Blueprint specifications
 build                   → (unversionned) Generated sources or output
  └ coverage.html        → HTML report of Lab testing tool (tests status + code coverage + linting results)
 config                  → Configurations files
@@ -96,6 +95,7 @@ node_modules            → (unversionned) Downloaded Node dependencies
 test                    → Source folder for unit or functional tests
 .gitignore              → Git ignored files configuration
 .travis.yml             → Travis CI configuration file
+blueprint.apib          → API Blueprint specifications
 package.json            → Node scripts & dependencies declaration
 Procfile                → Heroku configuration file
 README.md               → Project documentation
