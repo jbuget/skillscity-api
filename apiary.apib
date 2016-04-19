@@ -1,13 +1,15 @@
 FORMAT: 1A
+HOST: https://floating-shore-97213.herokuapp.com
 
-# Projects
+# Stacks API
 
-Projects is a simple API allowing consumers to CRUD projects.
+Stacks API is an API to manage Projects, Services and People.
 
 ## Projects Collection [/projects]
 
-### List All Projects [GET]
-+ Response 200 (application/json)
+### List all Projects [GET]
+
+    + Response 200 (application/json)
     [
         {
             "question": "Favourite programming language?",
@@ -35,7 +37,7 @@ Projects is a simple API allowing consumers to CRUD projects.
         }
     ]
 
-### Create a New Project [POST]
+### Create a new Project [POST]
 
 You may create your own project using this action. It takes a JSON object containing a question and a collection of answers in the form of choices.
 
@@ -79,10 +81,12 @@ You may create your own project using this action. It takes a JSON object contai
                 }
             ]
         }
-## Project [/projectss/{project_id}]
+        
+## Project [/projects/{project_id}]
+
+### Get a project [GET]
 + Parameters
-    + question_id (number) - ID of the Question in the form of an integer
-    ### View a Questions Detail [GET]
+    + project_id (number) - ID of the Project in the form of an integer
 + Response 200 (application/json)
     {
         "question": "Favourite programming language?",
@@ -109,5 +113,14 @@ You may create your own project using this action. It takes a JSON object contai
         ]
     }
 
-### Delete [DELETE]
+### Update a project [POST]
+
+### Delete a project [DELETE]
 + Response 204
+
+## Service Collection [/services]
+
+### List 
+
+## People Collection [/people]
+

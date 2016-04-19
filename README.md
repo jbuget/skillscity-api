@@ -95,7 +95,8 @@ node_modules            → (unversionned) Downloaded Node dependencies
 test                    → Source folder for unit or functional tests
 .gitignore              → Git ignored files configuration
 .travis.yml             → Travis CI configuration file
-blueprint.apib          → API Blueprint specifications
+apiary.apib             → API Blueprint specifications
+dredd.yml               → Dredd configuration file (Dredd is a language-agnostic HTTP API testing framework)
 package.json            → Node scripts & dependencies declaration
 Procfile                → Heroku configuration file
 README.md               → Project documentation

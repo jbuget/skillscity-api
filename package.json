@@ -6,7 +6,8 @@
   "scripts": {
     "start": "./node_modules/nodemon/bin/nodemon.js app/server.js",
     "test": "./node_modules/lab/bin/lab",
-    "coverage": "./node_modules/lab/bin/lab -c -L -r console -o stdout -r html -o build/coverage.html"
+    "test-coverage": "./node_modules/lab/bin/lab -c -L -r console -o stdout -r html -o build/coverage.html",
+    "test-api": "./node_modules/dredd/bin/dredd"
   },
   "repository": {
     "type": "git",
@@ -30,6 +31,7 @@
   "devDependencies": {
     "chai": "^3.5.0",
     "code": "^2.2.0",
+    "dredd": "^1.0.10",
     "lab": "^10.3.1",
     "nodemon": "^1.9.1",
     "proxyquire": "^1.7.4",
