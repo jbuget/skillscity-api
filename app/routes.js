@@ -7,6 +7,7 @@ const Projects = require('./controllers/projects');
 const internals = {};
 
 internals.index = function (request, reply) {
+
     reply('It works!');
 };
 
@@ -22,6 +23,6 @@ module.exports = [
     { path: '/projects', method: 'GET', handler: Projects.listProjects },
     { path: '/projects', method: 'POST', handler: Projects.createProject },
     { path: '/projects/{projectId}', method: 'GET', handler: Projects.getProject },
-    { path: '/projects/{projectId}', method: 'POST', handler: Projects.updateProject },
+    { path: '/projects/{projectId}', method: 'PUT', handler: Projects.updateProject },
     { path: '/projects/{projectId}', method: 'DELETE', handler: Projects.deleteProject }
 ];

@@ -3,6 +3,7 @@
 const db = require('../db').db();
 
 module.exports.persist = function (project, callback) {
+
     db.cypher({
         query: '' +
         'MERGE (id:UniqueId{name:"Project"}) ' +
@@ -19,18 +20,21 @@ module.exports.merge = function (project, callback) {
 };
 
 module.exports.get = function (projectId, callback) {
+
     db.cypher({
         query: 'MATCH (p:Project {id: ' + projectId + '}) RETURN p'
     }, callback);
 };
 
 module.exports.list = function (callback) {
+
     db.cypher({
         query: 'MATCH (p:Project) RETURN p'
     }, callback);
 };
 
 module.exports.del = function (projectId, callback) {
+
     db.cypher({
         query: 'MATCH (p:Project {id: ' + projectId + '}) DELETE p'
     }, callback);

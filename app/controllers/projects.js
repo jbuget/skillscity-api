@@ -4,7 +4,9 @@ const Boom = require('boom');
 const Project = require('../models/project');
 
 module.exports.listProjects = function (request, reply) {
-    Project.list(function (err, results) {
+
+    Project.list((err, results) => {
+
         if (err) {
             return reply(Boom.wrap(err));
         }
@@ -13,8 +15,10 @@ module.exports.listProjects = function (request, reply) {
 };
 
 module.exports.getProject = function (request, reply) {
-    var projectId = request.params.projectId;
-    Project.get(projectId, function (err, results) {
+
+    const projectId = request.params.projectId;
+    Project.get(projectId, (err, results) => {
+
         if (err) {
             return reply(Boom.wrap(err));
         }
@@ -23,8 +27,10 @@ module.exports.getProject = function (request, reply) {
 };
 
 module.exports.createProject = function (request, reply) {
-    var project = request.payload;
-    Project.persist(project, function (err, results) {
+
+    const project = request.payload;
+    Project.persist(project, (err, results) => {
+
         if (err) {
             return reply(Boom.wrap(err));
         }
@@ -33,8 +39,10 @@ module.exports.createProject = function (request, reply) {
 };
 
 module.exports.updateProject = function (request, reply) {
-    var project = request.payload;
-    Project.merge(project, function (err, results) {
+
+    const project = request.payload;
+    Project.merge(project, (err, results) => {
+
         if (err) {
             return reply(Boom.wrap(err));
         }
@@ -43,8 +51,10 @@ module.exports.updateProject = function (request, reply) {
 };
 
 module.exports.deleteProject = function (request, reply) {
-    var projectId = request.params.projectId;
-    Project.del(projectId, function (err, results) {
+
+    const projectId = request.params.projectId;
+    Project.del(projectId, (err) => {
+
         if (err) {
             return reply(Boom.wrap(err));
         }

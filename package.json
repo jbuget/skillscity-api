@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "./node_modules/nodemon/bin/nodemon.js app/server.js",
-    "test": "./node_modules/lab/bin/lab"
+    "test": "./node_modules/lab/bin/lab -c -L -r console -o stdout -r html -o build/coverage.html"
   },
   "repository": {
     "type": "git",

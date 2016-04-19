@@ -1,17 +1,20 @@
+'use strict';
+
 const Code = require('code');   // assertion library
 const Lab = require('lab');
 const lab = exports.lab = Lab.script();
 
-const server = require('../app/server');
+const Server = require('../app/server');
 
-lab.experiment("Basic HTTP Tests", function() {
+lab.experiment('Basic HTTP Tests', () => {
 
     lab.test('/', (done) => {
-        server.inject({method: "GET", url: "/"}, function(response) {
+
+        Server.inject({ method: 'GET', url: '/' }, (response) => {
+
             Code.expect(response.statusCode).to.equal(200);
             Code.expect(response.result).to.equal('It works!');
             done();
         });
     });
-
 });
