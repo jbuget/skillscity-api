@@ -66,7 +66,7 @@ describe('Project model object', () => {
         it('should fetch a single project by its ID', (done) => {
             // given
             const projectId = 123;
-            const callback = 'merge_callback';
+            const callback = 'get_callback';
 
             // when
             Project.get(projectId, callback);
