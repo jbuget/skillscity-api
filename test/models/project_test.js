@@ -55,7 +55,7 @@ describe('Project model object', () => {
                 'ON MATCH SET id.count = id.count + 1 ' +
                 'WITH id.count AS uid ' +
                 'CREATE (p:Project { id: uid, name: "project_name", client: "client_name" }) ' +
-                'RETURN p'
+                'RETURN p.name AS name, p.client AS client, p.logo AS logo'
             }, callback);
             done();
         });
@@ -73,7 +73,7 @@ describe('Project model object', () => {
 
             // then
             cypher.should.have.been.calledWith({
-                query: 'MATCH (p:Project {id: 123}) RETURN p'
+                query: 'MATCH (p:Project {id: 123}) RETURN p.name AS name, p.client AS client, p.logo AS logo'
             }, callback);
             done();
         });
@@ -108,7 +108,7 @@ describe('Project model object', () => {
 
             // then
             cypher.should.have.been.calledWith({
-                query: 'MATCH (p:Project) RETURN p'
+                query: 'MATCH (p:Project) RETURN p.name AS name, p.client AS client, p.logo AS logo'
             }, callback);
             done();
         });

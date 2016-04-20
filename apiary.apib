@@ -1,7 +1,7 @@
 FORMAT: 1A
 HOST: https://floating-shore-97213.herokuapp.com
 
-# Stacks API
+# Skills City API
 
 Stacks API is an API to manage Projects, Services and People.
 
@@ -10,27 +10,28 @@ Stacks API is an API to manage Projects, Services and People.
 ### List all Projects [GET]
 
 + Response 200 (application/json)
-    [
-        {
-            "id": 123,
-            "url": "/projects/123",
-            "name": "Refonte Frontal Billetterie",
-            "client": "FFT",
-            "logo": "http://cdn/projects/123.png"
-        }, {
-            "id": 456,
-            "url": "/projects/456",
-            "name": "Refonte Home Page",
-            "client": "Club Med",
-            "logo": "http://cdn/projects/456.png"
-        }, {
-            "id": 789,
-            "url": "/projects/789",
-            "name": "Refonte Booking Engine",
-            "client": "Club Med",
-            "logo": "http://cdn/projects/789.png"
-        }
-    ]
+
+        [
+            {
+                "id": 123,
+                "url": "/projects/123",
+                "name": "Refonte Frontal Billetterie",
+                "client": "FFT",
+                "logo": "http://cdn/projects/123.png"
+            }, {
+                "id": 456,
+                "url": "/projects/456",
+                "name": "Refonte Home Page",
+                "client": "Club Med",
+                "logo": "http://cdn/projects/456.png"
+            }, {
+                "id": 789,
+                "url": "/projects/789",
+                "name": "Refonte Booking Engine",
+                "client": "Club Med",
+                "logo": "http://cdn/projects/789.png"
+            }
+        ]
 
 ### Create a new Project [POST]
 
@@ -38,22 +39,28 @@ You may create your own project using this action. It takes a JSON object contai
 
 + project (string) - The project
 + Request (application/json)
-    {
-        "name": "Refonte Frontal Billetterie",
-        "client": "FFT"
-    }
-+ Response 201 (application/json)
-    + Headers
-        Location: /projects/123
-    + Body
+
         {
-            "id": 123,
-            "url": "/projects/123",
             "name": "Refonte Frontal Billetterie",
-            "client": "FFT",
-            "logo": "http://cdn/projects/123.png"
+            "client": "FFT"
         }
-        
+
++ Response 201 (application/json)
+
+    + Headers
+
+            Location: /projects/123
+
+    + Body
+
+            {
+                "id": 123,
+                "url": "/projects/123",
+                "name": "Refonte Frontal Billetterie",
+                "client": "FFT",
+                "logo": "http://cdn/projects/123.png"
+            }
+
 ## Project [/projects/{project_id}]
 
 ### Get a project [GET]
@@ -61,32 +68,36 @@ You may create your own project using this action. It takes a JSON object contai
 + Parameters
     + project_id (number) - ID of the Project in the form of an integer
 + Response 200 (application/json)
-    {
-        "id": 123,
-        "url": "/projects/123",
-        "name": "Refonte Frontal Billetterie",
-        "client": "FFT",
-        "logo": "http://cdn/projects/123.png"
-    }
+
+        {
+            "id": 123,
+            "url": "/projects/123",
+            "name": "Refonte Frontal Billetterie",
+            "client": "FFT",
+            "logo": "http://cdn/projects/123.png"
+        }
 
 ### Update a project [PUT]
 
 + Request (application/json)
-    {
-        "id": 123,
-        "url": "/projects/123",
-        "name": "New project name",
-        "client": "New project client",
-        "logo": "http://cdn/projects/new_logo.png"
-    }
+
+        {
+            "id": 123,
+            "url": "/projects/123",
+            "name": "New project name",
+            "client": "New project client",
+            "logo": "http://cdn/projects/new_logo.png"
+        }
+
 + Response 200 (application/json)
-    {
-        "id": 123,
-        "url": "/projects/123",
-        "name": "New project name",
-        "client": "New project client",
-        "logo": "http://cdn/projects/new_logo.png"
-    }
+
+        {
+            "id": 123,
+            "url": "/projects/123",
+            "name": "New project name",
+            "client": "New project client",
+            "logo": "http://cdn/projects/new_logo.png"
+        }
 
 ### Delete a project [DELETE]
 
@@ -101,12 +112,13 @@ You may create your own project using this action. It takes a JSON object contai
 ### List all People [GET]
 
 + Response 200 (application/json)
-    [
-        {
-            "url": "/people/bat",
-            "nickname": "BAT",
-            "firstName": "Bruce",
-            "lastName": "Wayne"
-        }
-    ]
+
+        [
+            {
+                "url": "/people/bat",
+                "nickname": "BAT",
+                "firstName": "Bruce",
+                "lastName": "Wayne"
+            }
+        ]
 

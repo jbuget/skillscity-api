@@ -66,7 +66,7 @@ describe('Person model object', () => {
 
             // then
             cypher.should.have.been.calledWith({
-                query: 'MATCH (p:Person) RETURN p'
+                query: 'MATCH (p:Person) RETURN p.nickname AS nickname, p.firstName AS firstName, p.lastName AS lastName'
             }, callback);
             done();
         });

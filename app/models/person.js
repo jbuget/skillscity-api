@@ -12,7 +12,10 @@ module.exports.empty = function (callback) {
 module.exports.createList = function (people, callback) {
 
     db.cypher({
-        query: 'UNWIND ' + people + ' AS people CREATE (p:Person) SET p = people RETURN p'
+        query: '' +
+        'UNWIND ' + people + ' AS people ' +
+        'CREATE (p:Person) SET p = people ' +
+        'RETURN p.nickname AS nickname, p.firstName AS firstName, p.lastName AS lastName'
     }, callback);
 };
 
@@ -30,7 +33,7 @@ module.exports.get = function (projectId, callback) {
 module.exports.list = function (callback) {
 
     db.cypher({
-        query: 'MATCH (p:Person) RETURN p'
+        query: 'MATCH (p:Person) RETURN p.nickname AS nickname, p.firstName AS firstName, p.lastName AS lastName'
     }, callback);
 };
 
