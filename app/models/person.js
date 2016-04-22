@@ -15,7 +15,7 @@ module.exports.createList = function (people, callback) {
         query: '' +
         'UNWIND ' + people + ' AS people ' +
         'CREATE (p:Person) SET p = people ' +
-        'RETURN p.nickname AS nickname, p.firstName AS firstName, p.lastName AS lastName'
+        'RETURN p.nickname AS nickname, p.first_name AS firstName, p.last_name AS lastName'
     }, callback);
 };
 
@@ -33,7 +33,7 @@ module.exports.get = function (projectId, callback) {
 module.exports.list = function (callback) {
 
     db.cypher({
-        query: 'MATCH (p:Person) RETURN p.nickname AS nickname, p.firstName AS firstName, p.lastName AS lastName'
+        query: 'MATCH (p:Person) RETURN p.nickname AS nickname, p.first_name AS firstName, p.last_name AS lastName'
     }, callback);
 };
 

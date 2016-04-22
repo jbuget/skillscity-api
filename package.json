@@ -6,8 +6,7 @@
   "scripts": {
     "start": "./node_modules/nodemon/bin/nodemon.js app/server.js",
     "test": "./node_modules/lab/bin/lab",
-    "test-coverage": "./node_modules/lab/bin/lab -c -L -r console -o stdout -r html -o build/coverage.html",
-    "test-api": "./node_modules/dredd/bin/dredd"
+    "coverage": "./node_modules/lab/bin/lab -c -L -r console -o stdout -r html -o build/coverage.html"
   },
   "repository": {
     "type": "git",
