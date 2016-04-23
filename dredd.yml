@@ -1,14 +1,17 @@
+reporter: apiary
+custom:
+  apiaryApiKey: 36bda7869e4fe39525f14ba9ebeeb55d
+  apiaryApiName: skillscity
 dry-run: null
 hookfiles: null
 language: nodejs
 sandbox: false
-server: npm start
+#server: node app/server.js
+server: null
 server-wait: 3
 init: false
-custom: {}
 names: false
 only: []
-reporter: apiary
 output: []
 header: []
 sorted: false

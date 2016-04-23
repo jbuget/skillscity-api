@@ -1,18 +1,12 @@
 'use strict';
 
+const Api = require('./controllers/api');
 const Hello = require('./controllers/hello');
 const People = require('./controllers/people');
 const Projects = require('./controllers/projects');
 
-const internals = {};
-
-internals.index = function (request, reply) {
-
-    reply('It works!');
-};
-
 module.exports = [
-    { path: '/', method: 'GET', handler: internals.index },
+    { path: '/', method: 'GET', handler: Api.displayApi },
 
     { path: '/hello', method: 'GET', handler: Hello.sayHelloWorld },
     { path: '/hello/{name}', method: 'GET', handler: Hello.sayHello },

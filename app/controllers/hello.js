@@ -2,10 +2,10 @@
 
 module.exports.sayHelloWorld = function (request, reply) {
 
-    reply('Hello, world!');
+    reply({message: 'Hello, world!'});
 };
 
 module.exports.sayHello = function (request, reply) {
 
-    reply('Hello, ' + encodeURIComponent(request.params.name) + '!');
+    reply({message: 'Hello, ' + encodeURIComponent(request.params.name) + '!'});
 };

@@ -14,7 +14,7 @@ lab.experiment('/hello', () => {
         Server.inject({ method: 'GET', url: '/hello' }, (response) => {
 
             response.statusCode.should.equal(200);
-            response.result.should.equal('Hello, world!');
+            response.result.should.deep.equal({message: 'Hello, world!'});
             done();
         });
     });
@@ -24,7 +24,7 @@ lab.experiment('/hello', () => {
         Server.inject({ method: 'GET', url: '/hello/John' }, (response) => {
 
             response.statusCode.should.equal(200);
-            response.result.should.equal('Hello, John!');
+            response.result.should.deep.equal({message: 'Hello, John!'});
             done();
         });
     });

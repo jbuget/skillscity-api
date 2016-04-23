@@ -1,19 +1,20 @@
 'use strict';
 
-const Code = require('code');   // assertion library
 const Lab = require('lab');
 const lab = exports.lab = Lab.script();
+const Chai = require('chai');
+Chai.should();
 
-const Server = require('../app/server');
+const Server = require('../../app/server');
 
-lab.experiment('Basic HTTP Tests', () => {
+lab.experiment('/', () => {
 
     lab.test('/', (done) => {
 
         Server.inject({ method: 'GET', url: '/' }, (response) => {
 
-            Code.expect(response.statusCode).to.equal(200);
-            Code.expect(response.result).to.include({
+            response.statusCode.should.equal(200);
+            response.result.should.deep.equal({
                 'hello': '/hello{/name}',
                 'people': '/people{/person_id}',
                 'projects': '/projects{/project_id}'
@@ -21,4 +22,7 @@ lab.experiment('Basic HTTP Tests', () => {
             done();
         });
     });
+
 });
+
+

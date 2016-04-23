@@ -2,7 +2,6 @@
 
 const Hapi = require('hapi');
 const Good = require('good');
-const Blipp = require('blipp');
 const Config = require('config');
 const Routes = require('./routes');
 
@@ -25,10 +24,7 @@ server.register([{
             }
         }]
     }
-}, {
-    register: Blipp,
-    options: {}
-}], (err) => {
+}, require('blipp')], (err) => {
 
     if (err) {
         throw err;
