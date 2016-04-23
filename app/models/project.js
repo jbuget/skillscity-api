@@ -16,7 +16,7 @@ module.exports.persist = function (project, callback) {
 };
 
 module.exports.merge = function (project, callback) {
-
+    callback(null, project);
 };
 
 module.exports.get = function (projectId, callback) {
