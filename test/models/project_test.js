@@ -55,7 +55,7 @@ describe('Project model object', () => {
                 'ON MATCH SET id.count = id.count + 1 ' +
                 'WITH id.count AS uid ' +
                 'CREATE (p:Project { id: uid, name: "project_name", client: "client_name" }) ' +
-                'RETURN p.name AS name, p.client AS client, p.logo AS logo'
+                'RETURN p.id AS id, p.name AS name, p.client AS client, p.image AS image'
             }, callback);
             done();
         });
@@ -66,15 +66,18 @@ describe('Project model object', () => {
         it('should fetch a single project by its ID', (done) => {
             // given
             const projectId = 123;
-            const callback = 'get_callback';
+            const callback = Sinon.spy();
 
             // when
             Project.get(projectId, callback);
 
             // then
             cypher.should.have.been.calledWith({
-                query: 'MATCH (p:Project {id: 123}) RETURN p.name AS name, p.client AS client, p.logo AS logo'
-            }, callback);
+                query: '' +
+                'MATCH (p:Project {id: 123}) ' +
+                'RETURN p.id AS id, p.name AS name, p.client AS client, p.image AS image ' +
+                'LIMIT 1'
+            });
             done();
         });
     });
@@ -108,10 +111,38 @@ describe('Project model object', () => {
 
             // then
             cypher.should.have.been.calledWith({
-                query: 'MATCH (p:Project) RETURN p.name AS name, p.client AS client, p.logo AS logo'
+                query: 'MATCH (p:Project) RETURN p.id AS id, p.name AS name, p.client AS client, p.image AS image'
             }, callback);
             done();
         });
     });
+
+    describe('#merge', () => {
+
+        it('should ', (done) => {
+            // given
+            const project = {
+                id: 123,
+                name: 'new_project_name',
+                client: 'new_client_name',
+                image: 'http://new.image.url'
+            };
+            const callback = 'merge_callback';
+
+            // when
+            Project.merge(project, callback);
+
+            // then
+            cypher.should.have.been.calledWith({
+                query: '' +
+                'MATCH (p:Project { id: ' + project.id + ' }) ' +
+                'SET p.name = "' + project.name + '", p.client = "' + project.client + '", p.image = "' + project.image + '" ' +
+                'RETURN p.id AS id, p.name AS name, p.client AS client, p.image AS image'
+            }, callback);
+            done();
+        });
+
+    });
+
 
 });

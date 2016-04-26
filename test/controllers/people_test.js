@@ -68,9 +68,16 @@ describe('Projects API', () => {
     describe('POST /people', () => {
 
         afterEach((done) => {
-            if (Person.empty.restore) Person.empty.restore();
-            if (Request.get.restore) Request.get.restore();
-            if (Person.createList.restore) Person.createList.restore();
+
+            if (Person.empty.restore) {
+                Person.empty.restore();
+            }
+            if (Request.get.restore) {
+                Request.get.restore();
+            }
+            if (Person.createList.restore) {
+                Person.createList.restore();
+            }
             done();
         });
 
@@ -82,48 +89,48 @@ describe('Projects API', () => {
                 { nickname: 'XJU', firstName: 'Xavier', lastName: 'Julien' }
             ];
             const askBobItems = {
-                "items": [{
-                    "nickname": "PBE",
-                    "first_name": "Pierrette",
-                    "last_name": "Bertrand",
-                    "mobile_number": "+33 6 67 35 43 60",
-                    "email": "pbertrand@octo.com",
-                    "tiny_photo": "http://s3.amazonaws.com/askbob/users/photos/407/tiny/DSC_1897.jpg?1420822837",
-                    "photo": "http://s3.amazonaws.com/askbob/users/photos/407/preview/DSC_1897.jpg?1420822837",
-                    "lob": "WEBF",
-                    "manager": "FPE",
-                    "entry_date": "2015-01-05",
-                    "leaving_date": null,
-                    "level": "2 CC",
-                    "job": "Consultant confirm\u00e9"
+                'items': [{
+                    'nickname': 'PBE',
+                    'first_name': 'Pierrette',
+                    'last_name': 'Bertrand',
+                    'mobile_number': '+33 6 67 35 43 60',
+                    'email': 'pbertrand@octo.com',
+                    'tiny_photo': 'http://s3.amazonaws.com/askbob/users/photos/407/tiny/DSC_1897.jpg?1420822837',
+                    'photo': 'http://s3.amazonaws.com/askbob/users/photos/407/preview/DSC_1897.jpg?1420822837',
+                    'lob': 'WEBF',
+                    'manager': 'FPE',
+                    'entry_date': '2015-01-05',
+                    'leaving_date': null,
+                    'level': '2 CC',
+                    'job': 'Consultant confirm\u00e9'
                 }, {
-                    "nickname": "JBU",
-                    "first_name": "J\u00e9r\u00e9my",
-                    "last_name": "Buget",
-                    "mobile_number": "0620667129",
-                    "email": "jbuget@octo.com",
-                    "tiny_photo": "http://s3.amazonaws.com/askbob/users/photos/224/tiny/jbu_profile_medium.jpg?1414161627",
-                    "photo": "http://s3.amazonaws.com/askbob/users/photos/224/preview/jbu_profile_medium.jpg?1414161627",
-                    "lob": "WEBF",
-                    "manager": "FPE",
-                    "entry_date": "2013-02-04",
-                    "leaving_date": null,
-                    "level": "3 CS",
-                    "job": "Consultant Senior"
+                    'nickname': 'JBU',
+                    'first_name': 'J\u00e9r\u00e9my',
+                    'last_name': 'Buget',
+                    'mobile_number': '0620667129',
+                    'email': 'jbuget@octo.com',
+                    'tiny_photo': 'http://s3.amazonaws.com/askbob/users/photos/224/tiny/jbu_profile_medium.jpg?1414161627',
+                    'photo': 'http://s3.amazonaws.com/askbob/users/photos/224/preview/jbu_profile_medium.jpg?1414161627',
+                    'lob': 'WEBF',
+                    'manager': 'FPE',
+                    'entry_date': '2013-02-04',
+                    'leaving_date': null,
+                    'level': '3 CS',
+                    'job': 'Consultant Senior'
                 }, {
-                    "nickname": "XJU",
-                    "first_name": "Xavier",
-                    "last_name": "Julien",
-                    "mobile_number": "+33 6 68 61 20 78",
-                    "email": "xjulien@octo.com",
-                    "tiny_photo": "http://s3.amazonaws.com/askbob/users/photos/437/tiny/5_Photo.jpg?1428566155",
-                    "photo": "http://s3.amazonaws.com/askbob/users/photos/437/preview/5_Photo.jpg?1428566155",
-                    "lob": "WEBF",
-                    "manager": "FPE",
-                    "entry_date": "2015-04-08",
-                    "leaving_date": null,
-                    "level": "1 C",
-                    "job": "Consultant"
+                    'nickname': 'XJU',
+                    'first_name': 'Xavier',
+                    'last_name': 'Julien',
+                    'mobile_number': '+33 6 68 61 20 78',
+                    'email': 'xjulien@octo.com',
+                    'tiny_photo': 'http://s3.amazonaws.com/askbob/users/photos/437/tiny/5_Photo.jpg?1428566155',
+                    'photo': 'http://s3.amazonaws.com/askbob/users/photos/437/preview/5_Photo.jpg?1428566155',
+                    'lob': 'WEBF',
+                    'manager': 'FPE',
+                    'entry_date': '2015-04-08',
+                    'leaving_date': null,
+                    'level': '1 C',
+                    'job': 'Consultant'
                 }]
             };
             Sinon.stub(Person, 'empty').yields();

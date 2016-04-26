@@ -11,6 +11,10 @@ const Chai = require('chai');
 Chai.should();
 Chai.use(require('sinon-chai'));
 
+const Fs = require('fs');
+const FormData = require('form-data');
+const StreamToPromise = require('stream-to-promise');
+
 const Project = require('../../app/models/project');
 
 const Server = require('../../app/server');
@@ -110,7 +114,7 @@ describe('Projects API', () => {
         });
     });
 
-    describe('GET /project/{projectId}', () => {
+    describe('GET /projects/{projectId}', () => {
 
         afterEach((done) => {
 
@@ -153,7 +157,7 @@ describe('Projects API', () => {
         });
     });
 
-    describe('PUT /project/{projectId}', () => {
+    describe('PUT /projects/{projectId}', () => {
 
         afterEach((done) => {
 
@@ -198,7 +202,7 @@ describe('Projects API', () => {
         });
     });
 
-    describe('DELETE /project/{projectId}', () => {
+    describe('DELETE /projects/{projectId}', () => {
 
         afterEach((done) => {
 
@@ -238,6 +242,40 @@ describe('Projects API', () => {
                 done();
             });
         });
+    });
+
+    describe('POST /projects/{projectId}/image', () => {
+
+        afterEach((done) => {
+
+            Project.get.restore();
+            done();
+        });
+
+        it('should reply an error 400 when project does not exist', (done) => {
+            // given
+            Sinon.stub(Project, 'get', (projectId, callback) => {
+
+                callback(new Error('project not found'));
+            });
+
+            const form = new FormData();
+            form.append('project-image', Fs.createReadStream('./test/test.png'));
+            const headers = form.getHeaders();
+
+            // when
+            StreamToPromise(form).then((payload) => {
+
+                Server.inject({ method: 'POST', url: '/projects/9999/image', payload: payload, headers: headers }, (response) => {
+                    // then
+                    response.statusCode.should.equal(404);
+                    const expectedError = JSON.parse(response.payload);
+                    expectedError.message.should.equal('Project 9999 does not exist');
+                    done();
+                });
+            });
+        });
+
     });
 
 });

@@ -19,22 +19,26 @@
   },
   "homepage": "https://github.com/jbuget/stacks-api#readme",
   "dependencies": {
+    "aws-sdk": "^2.3.5",
     "blipp": "^2.3.0",
     "config": "^1.20.1",
     "good": "^6.6.0",
     "good-console": "^5.3.1",
     "hapi": "^13.3.0",
     "neo4j": "^2.0.0-RC2",
-    "request": "^2.71.0"
+    "request": "^2.71.0",
+    "s3-upload-stream": "^1.0.7"
   },
   "devDependencies": {
     "chai": "^3.5.0",
     "code": "^2.2.0",
+    "form-data": "^1.0.0-rc4",
     "lab": "^10.3.1",
     "nodemon": "^1.9.1",
     "proxyquire": "^1.7.4",
     "request-debug": "^0.2.0",
     "sinon": "^1.17.3",
-    "sinon-chai": "^2.8.0"
+    "sinon-chai": "^2.8.0",
+    "stream-to-promise": "^1.1.0"
   }
 }

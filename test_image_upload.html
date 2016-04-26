@@ -1,0 +1,25 @@
+<!doctype html>
+
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+
+    <title>Test image upload</title>
+
+    <!--[if lt IE 9]>
+    <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+</head>
+
+<body>
+
+    <form method="POST" action="http://localhost:3000/projects/68/image" enctype="multipart/form-data">
+        <p>
+            <label>Select an image</label>
+            <input type="file" name="project-image">
+        </p>
+        <input type="submit">
+    </form>
+
+</body>
+</html>

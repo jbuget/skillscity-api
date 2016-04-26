@@ -11,25 +11,37 @@ module.exports.persist = function (project, callback) {
         'ON MATCH SET id.count = id.count + 1 ' +
         'WITH id.count AS uid ' +
         'CREATE (p:Project { id: uid, name: "' + project.name + '", client: "' + project.client + '" }) ' +
-        'RETURN p.name AS name, p.client AS client, p.logo AS logo'
+        'RETURN p.id AS id, p.name AS name, p.client AS client, p.image AS image'
     }, callback);
 };
 
 module.exports.merge = function (project, callback) {
-    callback(null, project);
+
+    db.cypher({
+        query: '' +
+        'MATCH (p:Project { id: ' + project.id + ' }) ' +
+        'SET p.name = "' + project.name + '", p.client = "' + project.client + '", p.image = "' + project.image + '" ' +
+        'RETURN p.id AS id, p.name AS name, p.client AS client, p.image AS image'
+    }, callback);
 };
 
 module.exports.get = function (projectId, callback) {
 
     db.cypher({
-        query: 'MATCH (p:Project {id: ' + projectId + '}) RETURN p.name AS name, p.client AS client, p.logo AS logo'
-    }, callback);
+        query: '' +
+        'MATCH (p:Project {id: ' + projectId + '}) ' +
+        'RETURN p.id AS id, p.name AS name, p.client AS client, p.image AS image ' +
+        'LIMIT 1'
+    }, (err, results) => {
+
+        callback(err, results[0]);
+    });
 };
 
 module.exports.list = function (callback) {
 
     db.cypher({
-        query: 'MATCH (p:Project) RETURN p.name AS name, p.client AS client, p.logo AS logo'
+        query: 'MATCH (p:Project) RETURN p.id AS id, p.name AS name, p.client AS client, p.image AS image'
     }, callback);
 };
 

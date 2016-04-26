@@ -10,10 +10,8 @@ internals.cleanPeople = function () {
 
     return new Promise((resolve, reject) => {
 
-        console.log("Inside cleanPeople promise");
         Person.empty((err) => {
 
-            console.log("People have been deleted successfully");
             if (err) {
                 return reject(err);
             }

@@ -34,15 +34,15 @@ Stacks API is an API to manage Projects, Services and People.
             {
                 "name": "Refonte Frontal Billetterie",
                 "client": "FFT",
-                "logo": "http://cdn/projects/123.png"
+                "image_link": "http://cdn/projects/123.png"
             }, {
                 "name": "Refonte Home Page",
                 "client": "Club Med",
-                "logo": "http://cdn/projects/456.png"
+                "image_link": "http://cdn/projects/456.png"
             }, {
                 "name": "Refonte Booking Engine",
                 "client": "Club Med",
-                "logo": "http://cdn/projects/789.png"
+                "image_link": "http://cdn/projects/789.png"
             }
         ]
 
@@ -69,7 +69,7 @@ You may create your own project using this action. It takes a JSON object contai
             {
                 "name": "Refonte Frontal Billetterie",
                 "client": "FFT",
-                "logo": "http://cdn/projects/123.png"
+                "image_link": "http://cdn/projects/123.png"
             }
 
 ## Project [/projects/{project_id}]
@@ -84,7 +84,7 @@ You may create your own project using this action. It takes a JSON object contai
         {
             "name": "Refonte Frontal Billetterie",
             "client": "FFT",
-            "logo": "http://cdn/projects/123.png"
+            "image_link": "http://cdn/projects/123.png"
         }
 
 ### Update a project [PUT]
@@ -94,7 +94,6 @@ You may create your own project using this action. It takes a JSON object contai
         {
             "name": "New project name",
             "client": "New project client",
-            "logo": "http://cdn/projects/new_logo.png"
         }
 
 + Response 200
@@ -102,28 +101,39 @@ You may create your own project using this action. It takes a JSON object contai
         {
             "name": "New project name",
             "client": "New project client",
-            "logo": "http://cdn/projects/new_logo.png"
+            "image_link": "http://cdn/projects/new_logo.png"
         }
 
 ### Delete a project [DELETE]
 
 + Response 204
 
+## Project image [/projects/{project_id}/image]
+
++ Parameters
+    + project_id: 1 (required, number) - ID of the Project in form of an integer
+
+### Upload project image [PUT]
+
++ Request (multipart/form-data; boundary=---BOUNDARY)
+
+        -----BOUNDARY
+        Content-Disposition: form-data; name="image[file]"; filename="image.jpg"
+        Content-Type: image/jpeg
+        Content-Transfer-Encoding: base64
+
+        /9j/4AAQSkZJRgABAQEAYABgAAD/2wBDAAgGBgcGBQgHBwcJCQgKDBQNDAsLDBkSEw8UHRofHh0a
+        HBwgJC4nICIsIxwcKDcpLDAxNDQ0Hyc5PTgyPC4zNDL/2wBDAQkJCQwLDBgNDRgyIRwhMjIyMjIy
+        MjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjL/wAARCAABAAEDASIA
+        AhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAf/xAAUEAEAAAAAAAAAAAAAAAAAAAAA/8QAFAEB
+        AAAAAAAAAAAAAAAAAAAAAP/EABQRAQAAAAAAAAAAAAAAAAAAAAD/2gAMAwEAAhEDEQA/AL+AD//Z
+        -----BOUNDARY
+
++ Response 201
+
+        Ok.
+
+
 ## Service Collection [/services]
 
 ### List 
-
-## People Collection [/people]
-
-### List all People [GET]
-
-+ Response 200
-
-        [
-            {
-                "nickname": "BAT",
-                "firstName": "Bruce",
-                "lastName": "Wayne"
-            }
-        ]
-

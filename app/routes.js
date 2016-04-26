@@ -18,5 +18,17 @@ module.exports = [
     { path: '/projects', method: 'POST', handler: Projects.createProject },
     { path: '/projects/{projectId}', method: 'GET', handler: Projects.getProject },
     { path: '/projects/{projectId}', method: 'PUT', handler: Projects.updateProject },
-    { path: '/projects/{projectId}', method: 'DELETE', handler: Projects.deleteProject }
+    { path: '/projects/{projectId}', method: 'DELETE', handler: Projects.deleteProject },
+    {
+        path: '/projects/{projectId}/image',
+        method: 'POST',
+        config: {
+            payload: {
+                output: 'stream',
+                parse: true,
+                allow: 'multipart/form-data'
+            },
+            handler: Projects.uploadImage
+        }
+    }
 ];
