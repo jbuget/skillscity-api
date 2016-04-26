@@ -257,6 +257,12 @@ describe('Projects API', () => {
 
     describe('DELETE /projects', () => {
 
+        afterEach((done) => {
+
+            Project.empty.restore();
+            done();
+        });
+
         it('should remove all projects in DB', (done) => {
             // given
             Sinon.stub(Project, 'empty').resolves(true);
@@ -267,6 +273,19 @@ describe('Projects API', () => {
                 // then
                 response.statusCode.should.equal(204);
                 response.payload.should.equal('');
+                done();
+            });
+        });
+
+        it('should reply with an error in case of exception', (done) => {
+            // given
+            Sinon.stub(Project, 'empty').rejects(new Error('Some error'));
+
+            // when
+            Server.inject({ method: 'DELETE', url: '/projects' }, (response) => {
+
+                // then
+                response.statusCode.should.equal(500);
                 done();
             });
         });

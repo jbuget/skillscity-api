@@ -19,7 +19,7 @@ module.exports.listProjects = function (request, reply) {
 module.exports.emptyProjects = function (request, reply) {
 
     Project.empty()
-        .then(reply().code(204))
+        .then(() => reply().code(204))
         .catch((err) => internals.replyWithWrappedError(reply, err));
 };
 
