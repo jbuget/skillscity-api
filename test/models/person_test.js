@@ -18,7 +18,7 @@ describe('Person model object', () => {
     const cypher = Sinon.spy();
     const Project = Proxyquire('../../app/models/person', {
 
-        '../db': {
+        '../middlewares/db': {
             db: () => {
 
                 return {

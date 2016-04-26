@@ -27,11 +27,13 @@ server.register([{
 }, require('blipp')], (err) => {
 
     if (err) {
+        console.error(err);
         throw err;
     }
     server.start((err) => {
 
         if (err) {
+            console.error(err);
             throw err;
         }
         server.log('info', 'Server running on ' + Config.get('env.name') + ' environment at: ' + server.info.uri);

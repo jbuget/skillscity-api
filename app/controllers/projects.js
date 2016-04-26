@@ -3,9 +3,7 @@
 const Boom = require('boom');
 const Project = require('../models/project');
 const Path = require('path');
-const AWS = require('aws-sdk');
-const s3Stream = require('s3-upload-stream')(new AWS.S3());
-const ONE_MB = 1048576;
+const AwsS3Client = require('../middlewares/awsS3Client');
 
 const internals = {};
 
@@ -57,13 +55,28 @@ module.exports.deleteProject = function (request, reply) {
 
 module.exports.uploadImage = function (request, reply) {
 
+    console.log('#uploadImage');
+
+    let project;
     const projectId = request.params.projectId;
-    const image = request.payload['project-image'];
 
     Project.get(projectId)
-        .then((project) => internals.uploadImageStreamToAwsS3(project, image))
-        .then((project) => Project.merge(project))
-        .then((project) => reply(project))
+        .then((retrievedProject) => {
+
+            const file = request.payload['project-image'];
+            const extension = Path.extname(file.hapi.filename);
+            const key = 'projects/' + projectId + extension;
+            const contentType = file.hapi.headers['content-type'];
+
+            project = retrievedProject;
+            return AwsS3Client.uploadStreamToAwsS3(file, key, contentType);
+        })
+        .then((details) => {
+
+            project.image = details.Location;
+            return Project.merge(project);
+        })
+        .then((updatedProject) => reply(updatedProject))
         .catch((err) => internals.replyWithWrappedError(reply, err));
 };
 
@@ -71,36 +84,4 @@ internals.replyWithWrappedError = function (reply, err) {
 
     console.error(err);
     return reply(Boom.wrap(err));
-};
-
-internals.uploadImageStreamToAwsS3 = function (project, image) {
-
-    return new Promise((resolve, reject) => {
-
-        const bucketName = 'skillscity';
-        const extension = Path.extname(image.hapi.filename);
-        const fileKey = 'projects/' + project.id + extension;
-
-        const upload = s3Stream.upload({
-            Bucket: bucketName,
-            Key: fileKey,
-            ACL: 'public-read',
-            StorageClass: 'REDUCED_REDUNDANCY',
-            ContentType: image.hapi.headers['content-type']
-        });
-
-        upload.maxPartSize(ONE_MB);
-
-        upload.on('error', (err) => {
-
-            return reject(err);
-        });
-
-        upload.on('uploaded', (details) => {
-
-            project.image = details.Location;
-            return resolve(project);
-        });
-        image.pipe(upload);
-    });
 };

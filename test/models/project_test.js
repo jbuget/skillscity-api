@@ -23,7 +23,7 @@ describe('Project model object', () => {
     const cypher = Sinon.stub();
     const Project = Proxyquire('../../app/models/project', {
 
-        '../db': {
+        '../middlewares/db': {
             db: () => {
 
                 return {
