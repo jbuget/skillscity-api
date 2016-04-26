@@ -55,8 +55,6 @@ module.exports.deleteProject = function (request, reply) {
 
 module.exports.uploadImage = function (request, reply) {
 
-    console.log('#uploadImage');
-
     let project;
     const projectId = request.params.projectId;
 

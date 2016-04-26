@@ -253,6 +253,4 @@ describe('Project model object', () => {
             return actual.should.be.rejectedWith(err);
         });
     });
-
-
 });
