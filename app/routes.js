@@ -16,6 +16,7 @@ module.exports = [
 
     { path: '/projects', method: 'GET', handler: Projects.listProjects },
     { path: '/projects', method: 'POST', handler: Projects.createProject },
+    { path: '/projects', method: 'DELETE', handler: Projects.emptyProjects },
     { path: '/projects/{projectId}', method: 'GET', handler: Projects.getProject },
     { path: '/projects/{projectId}', method: 'PUT', handler: Projects.updateProject },
     { path: '/projects/{projectId}', method: 'DELETE', handler: Projects.deleteProject },

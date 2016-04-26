@@ -7,6 +7,7 @@ const it = lab.it;
 const afterEach = lab.afterEach;
 
 const Sinon = require('sinon');
+require('sinon-as-promised');
 const Chai = require('chai');
 Chai.should();
 Chai.use(require('sinon-chai'));
@@ -32,14 +33,11 @@ describe('Projects API', () => {
         it('should return all the projects', (done) => {
             // given
             const projects = [
-                { id: 1, name: 'p1', client: 'c1' },
-                { id: 2, name: 'p2', client: 'c2' },
-                { id: 3, name: 'p3', client: 'c3' }
+                { id: 1, name: 'p1', client: 'c1', image: null },
+                { id: 2, name: 'p2', client: 'c2', image: null },
+                { id: 3, name: 'p3', client: 'c3', image: null }
             ];
-            Sinon.stub(Project, 'list', (callback) => {
-
-                callback(null, projects);
-            });
+            Sinon.stub(Project, 'list').resolves(projects);
 
             //when
             Server.inject({ method: 'GET', url: '/projects' }, (response) => {
@@ -53,10 +51,7 @@ describe('Projects API', () => {
 
         it('should return an internal server error in case of exception', (done) => {
             // given
-            Sinon.stub(Project, 'list', (callback) => {
-
-                callback(new Error('Some error'));
-            });
+            Sinon.stub(Project, 'list').rejects(new Error('Some error'));
 
             // when
             Server.inject({ method: 'GET', url: '/projects' }, (response) => {
@@ -80,10 +75,7 @@ describe('Projects API', () => {
             // given
             const newProject = { name: 'new_project', client: 'client_name' };
             const persistedProject = { id: 1, name: 'new_project', client: 'client_name' };
-            Sinon.stub(Project, 'persist', (project, callback) => {
-
-                callback(null, persistedProject);
-            });
+            Sinon.stub(Project, 'persist').resolves(persistedProject);
 
             //when
             Server.inject({ method: 'POST', url: '/projects', payload: JSON.stringify(newProject) }, (response) => {
@@ -99,10 +91,7 @@ describe('Projects API', () => {
 
             // given
             const newProject = { name: 'new_project', client: 'client_name' };
-            Sinon.stub(Project, 'persist', (project, callback) => {
-
-                callback(new Error('Some error'));
-            });
+            Sinon.stub(Project, 'persist').rejects(new Error('Some error'));
 
             // when
             Server.inject({ method: 'POST', url: '/projects', payload: JSON.stringify(newProject) }, (response) => {
@@ -125,10 +114,7 @@ describe('Projects API', () => {
         it('should return the project by its ID', (done) => {
             // given
             const project = { id: 123, name: 'project_name', client: 'client_name' };
-            Sinon.stub(Project, 'get', (projectId, callback) => {
-
-                callback(null, project);
-            });
+            Sinon.stub(Project, 'get').resolves(project);
 
             // when
             Server.inject({ method: 'GET', url: '/projects/123' }, (response) => {
@@ -142,10 +128,7 @@ describe('Projects API', () => {
 
         it('should return an internal server error in case of exception', (done) => {
             // given
-            Sinon.stub(Project, 'get', (projectId, callback) => {
-
-                callback(new Error('Some error'));
-            });
+            Sinon.stub(Project, 'get').rejects(new Error('Some error'));
 
             // when
             Server.inject({ method: 'GET', url: '/projects/123' }, (response) => {
@@ -169,13 +152,14 @@ describe('Projects API', () => {
             // given
             const originalproject = { id: 123, name: 'project_name', client: 'client_name' };
             const updatedProject = { id: 123, name: 'new_project_name', client: 'new_client_name' };
-            Sinon.stub(Project, 'merge', (projectId, callback) => {
-
-                callback(null, updatedProject);
-            });
+            Sinon.stub(Project, 'merge').resolves(updatedProject);
 
             // when
-            Server.inject({ method: 'PUT', url: '/projects/123', payload: JSON.stringify(originalproject) }, (response) => {
+            Server.inject({
+                method: 'PUT',
+                url: '/projects/123',
+                payload: JSON.stringify(originalproject)
+            }, (response) => {
 
                 // then
                 response.statusCode.should.equal(200);
@@ -187,10 +171,7 @@ describe('Projects API', () => {
         it('should return an internal server error in case of exception', (done) => {
             // given
             const project = { id: 123, name: 'project_name', client: 'client_name' };
-            Sinon.stub(Project, 'merge', (projectId, callback) => {
-
-                callback(new Error('Some error'));
-            });
+            Sinon.stub(Project, 'merge').rejects(new Error('Some error'));
 
             // when
             Server.inject({ method: 'PUT', url: '/projects/123', payload: JSON.stringify(project) }, (response) => {
@@ -212,10 +193,7 @@ describe('Projects API', () => {
 
         it('should update the project', (done) => {
             // given
-            Sinon.stub(Project, 'del', (projectId, callback) => {
-
-                callback(null);
-            });
+            Sinon.stub(Project, 'del').resolves(true);
 
             // when
             Server.inject({ method: 'DELETE', url: '/projects/123' }, (response) => {
@@ -229,10 +207,7 @@ describe('Projects API', () => {
 
         it('should return an internal server error in case of exception', (done) => {
             // given
-            Sinon.stub(Project, 'del', (projectId, callback) => {
-
-                callback(new Error('Some error'));
-            });
+            Sinon.stub(Project, 'del').rejects(new Error('Some error'));
 
             // when
             Server.inject({ method: 'DELETE', url: '/projects/123' }, (response) => {
@@ -254,10 +229,7 @@ describe('Projects API', () => {
 
         it('should reply an error 400 when project does not exist', (done) => {
             // given
-            Sinon.stub(Project, 'get', (projectId, callback) => {
-
-                callback(new Error('project not found'));
-            });
+            Sinon.stub(Project, 'get').rejects(new Error('project not found'));
 
             const form = new FormData();
             form.append('project-image', Fs.createReadStream('./test/test.png'));
@@ -266,13 +238,36 @@ describe('Projects API', () => {
             // when
             StreamToPromise(form).then((payload) => {
 
-                Server.inject({ method: 'POST', url: '/projects/9999/image', payload: payload, headers: headers }, (response) => {
+                Server.inject({
+                    method: 'POST',
+                    url: '/projects/9999/image',
+                    payload: payload,
+                    headers: headers
+                }, (response) => {
                     // then
-                    response.statusCode.should.equal(404);
+                    response.statusCode.should.equal(500);
                     const expectedError = JSON.parse(response.payload);
-                    expectedError.message.should.equal('Project 9999 does not exist');
+                    expectedError.message.should.equal('An internal server error occurred');
                     done();
                 });
+            });
+        });
+
+    });
+
+    describe('DELETE /projects', () => {
+
+        it('should remove all projects in DB', (done) => {
+            // given
+            Sinon.stub(Project, 'empty').resolves(true);
+
+            // when
+            Server.inject({ method: 'DELETE', url: '/projects' }, (response) => {
+
+                // then
+                response.statusCode.should.equal(204);
+                response.payload.should.equal('');
+                done();
             });
         });
 
