@@ -1,0 +1,15 @@
+{
+  "env": {
+    "name": "staging"
+  },
+  "db": {
+    "scheme": "https",
+    "host": "neo-heroku-stefanie-wiza-steelblue.digital-ocean.graphstory.com",
+    "port": 7473,
+    "username": "neo_heroku_stefanie_wiza_steelblue",
+    "password": "FrNyBDtRx13uwyM2Hj7sY19juV29oycoYur4O2UV"
+  },
+  "s3": {
+    "bucket": "skillscity-staging"
+  }
+}
