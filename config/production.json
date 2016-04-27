@@ -4,10 +4,10 @@
   },
   "db": {
     "scheme": "https",
-    "host": "neo-trial-tanya-beahan-hotpink.azure.graphstory.com",
+    "host": "neo-heroku-otilia-bernier-deepskyblue.digital-ocean.graphstory.com",
     "port": 7473,
-    "username": "neo_trial_tanya_beahan_hotpink",
-    "password": "KFTE5mQnNWFOG6ZsqD5ZCdXzX54UMHLGnMr2Za92"
+    "username": "neo_heroku_otilia_bernier_deepskyblue",
+    "password": "qe5jkxNBYwNY0aF6cmSD2Yu1L5eY2XSrISZuYjTL"
   },
   "s3": {
     "bucket": "skillscity-prod"
