@@ -3,6 +3,6 @@ node_js:
 - '5'
 deploy:
   provider: heroku
-  app: octo-webf-skillscity-dev
+  app: octo-webf-skillscity-api-dev
   api_key:
     secure: G4HJQVeW7SlXzS19RzN13Dsp1yRHvP7/oU1jjTupmRLonGr+ZEFDgkVrxXaUBS3NNsEz7yXgcoaAcBn/CeX3f+pjRNTOmmKsp+7tx0vx5nof1LfoBX/lHDcj8PYIPRNicjEuDyQxg3FIOoDXdaS9zt7O+BE45f771w3q0GowjwdrH/m68kwhJB+0ALNTSWjoFe6TAeyFQbQyfVh3uToOpcvWrPndwpn0DeW+PwSudHXNuMACDmDgQx7V/uDQU9vCFDf1EsM7GCgJDdZfUaYcAzLvljeUtYmnCGNvAV9Gf02SJGqkdkbZMoK0DNzYT2JTE5kZ3cXJktKRvFh2u2dm5Lat+LTfM1pnINc5J/wvE5xnXI6ARFRje2cs/Qg6P28Vc1iIUBwikp1/5MR7l0+eZQNVyyF6wYfqfCoWRqO9CkWzzVxHlVoNyXJClg9mwBocRNqoyS+SKPrqAZKZtT7WebNr8oG1ynxhKErobZ0yYdswiQ8Xee9pe2D67aigfivRY/79HeollhHwkNU9S2A80u3PVqLs0P0KDCTCCIN1TllZ/hUSwMEn/Aaik3P3kRei8e1r3/LsMAvpNo1FATbYP4iUrsc/0E1P3oXTZZYCCPVHINAh3Yuhz1g2oMopkyfqTQ+IvJRtOePuT9nt5QcjcgmrXi0Iw0DxpgJa6Tfe4Uk=
