@@ -4,10 +4,10 @@
   },
   "db": {
     "scheme": "https",
-    "host": "neo-heroku-isobel-klein-beige.digital-ocean.graphstory.com",
+    "host": "neo-trial-tanya-beahan-hotpink.azure.graphstory.com",
     "port": 7473,
-    "username": "neo_heroku_isobel_klein_beige",
-    "password": "4WzveYHRqYxBJRE7pZXfRhw4SSSIA2HxWfq8RA1p"
+    "username": "neo_trial_tanya_beahan_hotpink",
+    "password": "KFTE5mQnNWFOG6ZsqD5ZCdXzX54UMHLGnMr2Za92"
   },
   "s3": {
     "bucket": "skillscity-prod"
