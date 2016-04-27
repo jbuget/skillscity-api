@@ -6,6 +6,8 @@
 [![bitHound Dependencies](https://www.bithound.io/github/jbuget/stacks-api/badges/dependencies.svg)](https://www.bithound.io/github/jbuget/stacks-api/master/dependencies/npm)
 [![bitHound Dev Dependencies](https://www.bithound.io/github/jbuget/stacks-api/badges/devDependencies.svg)](https://www.bithound.io/github/jbuget/stacks-api/master/dependencies/npm)
 
+---
+
 ## Installation
 
 ### 1/ Prerequesites
@@ -107,6 +109,8 @@ skills-city-api
 ```
 
 
+---
+
 ## Managing environments
 
 We use [node-config](https://github.com/lorenwest/node-config) plugin to manage multi-environment runtime.
@@ -119,6 +123,8 @@ If it is defined (known values are 'stage' or 'production'), then the correspond
 
 **Warning!** If a ```config/local.json``` file is defined, it will be used, even if the NODE_ENV variable is set, according to the [node-config file load order](https://github.com/lorenwest/node-config/wiki/Configuration-Files#file-load-order).
 
+
+---
 
 ## Debugging
 
@@ -141,6 +147,8 @@ require('request-debug')(Request);
 
 [Other techniques](https://github.com/request/request#debugging) are described in the offical documentation.
 
+
+---
 
 ## Testing
 
@@ -188,6 +196,8 @@ Sinon is highly extensible. Thus, to make Sinon working with Chai, we use [sinon
 Sometimes we need to take hold of modules dependencies (loaded via `require`). Then we use [Proxyquire](https://github.com/thlorenz/proxyquire).
 
 
+---
+
 ## Code quality
 
 ### Usage
@@ -204,7 +214,7 @@ This task will :
  2. calculate the code coverage
  3. check code format
  4. generates a full HTML report in `build/coverage.html`
- 
+
 
 ### Code Coverage
 
@@ -216,6 +226,8 @@ Linting is the process of running a program that will analyse code for potential
 
 Note that, by default, Lab disables linting. To enable linting, you must set option `-L` (for `--lint`).
 
+
+---
 
 ## Release & deployment
 
