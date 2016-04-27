@@ -233,6 +233,14 @@ We use Heroku Pipeline as following :
 [Git] ––(auto)––> [Travis CI] ––(auto)––> [Heroku / Dev] ––(on demand)––> [Heroku / Staging] ––(on demand)––> [Heroku / Prod]
 ```
 
+### GraphStory for Neo4j on Heroku
+
+TODO
+
+### PaperTrail for advanced logging on Heroku
+
+TODO
+
 
 ## Other
 
