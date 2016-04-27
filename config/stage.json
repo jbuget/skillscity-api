@@ -10,6 +10,6 @@
     "password": "password"
   },
   "s3": {
-    "bucket": "skillscity"
+    "bucket": "skillscity-staging"
   }
 }

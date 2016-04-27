@@ -10,6 +10,6 @@
     "password": "4WzveYHRqYxBJRE7pZXfRhw4SSSIA2HxWfq8RA1p"
   },
   "s3": {
-    "bucket": "skillscity"
+    "bucket": "skillscity-prod"
   }
 }
