@@ -11,5 +11,8 @@
   },
   "s3": {
     "bucket": "skillscity"
+  },
+  "askbob": {
+    "endpoint": "http://askbob.octo.com/api/v1/vqZe12GQsvPvQUNSjW5xceiKh/people.json"
   }
 }
