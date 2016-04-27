@@ -233,4 +233,6 @@ Note that, by default, Lab disables linting. To enable linting, you must set opt
 
 ## Release & deployment
 
-Todo
+### Heroku pipeline
+
+TODO
