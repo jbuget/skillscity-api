@@ -227,7 +227,7 @@ describe('POST /projects/{projectId}/image', () => {
     beforeEach((done) => {
 
         form = new FormData();
-        form.append('project-image', Fs.createReadStream('./test/test.png'));
+        form.append('project-image', Fs.createReadStream('./test/resources/test.png'));
         headers = form.getHeaders();
         done();
     });

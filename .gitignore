@@ -37,3 +37,4 @@ node_modules
 *.iml
 /build
 config/local.json
+/tmp

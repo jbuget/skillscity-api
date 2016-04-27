@@ -17,7 +17,6 @@ Chai.use(require('chai-as-promised'));
 // Setup Proxyquire to manage dependency innjection
 const Proxyquire = require('proxyquire');
 
-
 describe('Project model object', () => {
 
     const cypher = Sinon.stub();
