@@ -1,10 +1,10 @@
 {
   "env": {
-    "name": "stage"
+    "name": "dev"
   },
   "db": {
     "scheme": "https",
-    "host": "neo-heroku-isobel-klein-beige.digital-ocean.graphstory.com",
+    "host": "neo-heroku-rita-dicki-magenta.digital-ocean.graphstory.com",
     "port": 7473,
     "username": "neo_heroku_rita_dicki_magenta",
     "password": "QxlPu0HW33GRAyWbMqu0n9nS16HU4hQTUnzK269b"
