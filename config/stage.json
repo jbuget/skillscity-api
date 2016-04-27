@@ -8,5 +8,8 @@
     "port": 7474,
     "username": "neo4j",
     "password": "password"
+  },
+  "s3": {
+    "bucket": "skillscity"
   }
 }

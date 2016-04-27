@@ -8,5 +8,8 @@
     "port": 7473,
     "username": "neo_heroku_isobel_klein_beige",
     "password": "4WzveYHRqYxBJRE7pZXfRhw4SSSIA2HxWfq8RA1p"
+  },
+  "s3": {
+    "bucket": "skillscity"
   }
 }
