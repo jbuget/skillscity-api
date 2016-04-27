@@ -6,7 +6,6 @@
 [![bitHound Dependencies](https://www.bithound.io/github/jbuget/stacks-api/badges/dependencies.svg)](https://www.bithound.io/github/jbuget/stacks-api/master/dependencies/npm)
 [![bitHound Dev Dependencies](https://www.bithound.io/github/jbuget/stacks-api/badges/devDependencies.svg)](https://www.bithound.io/github/jbuget/stacks-api/master/dependencies/npm)
 
----
 
 ## Installation
 
@@ -79,8 +78,6 @@ $ curl -G 'http://localhost:3000'
 - Install the [Heroku Toolbelt](https://toolbelt.heroku.com/)
 
 
----
-
 ## Anatomy of the application
 
 ```
@@ -111,8 +108,6 @@ skills-city-api
 ```
 
 
----
-
 ## Managing environments
 
 We use [node-config](https://github.com/lorenwest/node-config) plugin to manage multi-environment runtime.
@@ -121,12 +116,17 @@ In particular, we manage environment specific configuration (DB, SMTP, variables
 
 If NODE_ENV variable is not defined, then ```config/default.json``` configuration file will be used.
 
-If it is defined (known values are 'stage' or 'production'), then the corresponding environment configuration file (ex: ```config/stage.json```) will be used.
+If it is defined (known values are 'dev', 'staging' or 'production'), then the corresponding environment configuration file (ex: ```config/staging.json```) will be used.
 
 **Warning!** If a ```config/local.json``` file is defined, it will be used, even if the NODE_ENV variable is set, according to the [node-config file load order](https://github.com/lorenwest/node-config/wiki/Configuration-Files#file-load-order).
 
+| Environment                                                   | Config file                  | Heroku app                  | AWS S3 bucket      |
+|---------------------------------------------------------------|------------------------------|-----------------------------|--------------------|
+| [Local](http://localhost:3000)                                | default.json (or local.json) | –                           | skillscity-local   |
+| [Development](https://octo-skillscity-api-dev.herokuapp.com)  | dev.json                     | octo-skillscity-api-dev     | skillscity-dev     |
+| [Staging](https://octo-skillscity-api-staging.herokuapp.com)  | staging.json                 | octo-skillscity-api-staging | skillscity-staging |
+| [Production](https://octo-skillscity-api-prod.herokuapp.com)  | prod.json                    | octo-skillscity-api-prod    | skillscity-prod    |
 
----
 
 ## Debugging
 
@@ -149,8 +149,6 @@ require('request-debug')(Request);
 
 [Other techniques](https://github.com/request/request#debugging) are described in the offical documentation.
 
-
----
 
 ## Testing
 
@@ -198,8 +196,6 @@ Sinon is highly extensible. Thus, to make Sinon working with Chai, we use [sinon
 Sometimes we need to take hold of modules dependencies (loaded via `require`). Then we use [Proxyquire](https://github.com/thlorenz/proxyquire).
 
 
----
-
 ## Code quality
 
 ### Usage
@@ -229,14 +225,25 @@ Linting is the process of running a program that will analyse code for potential
 Note that, by default, Lab disables linting. To enable linting, you must set option `-L` (for `--lint`).
 
 
----
-
 ## Release & deployment
 
-### Configuration
+We use Heroku Pipeline as following :
 
-We use [Config](https://github.com/lorenwest/node-config) node library.
+```
+[Git] ––(auto)––> [Travis CI] ––(auto)––> [Heroku / Dev] ––(on demand)––> [Heroku / Staging] ––(on demand)––> [Heroku / Prod]
+```
 
-### Heroku pipeline
+
+## Other
+
+### API Management with API Blueprint & Dredd
+
+TODO
+
+### Documents storage with AWS S3
+
+TODO
+
+### Fetch Octos with AskBob
 
 TODO
