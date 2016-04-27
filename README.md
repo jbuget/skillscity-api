@@ -79,6 +79,8 @@ $ curl -G 'http://localhost:3000'
 - Install the [Heroku Toolbelt](https://toolbelt.heroku.com/)
 
 
+---
+
 ## Anatomy of the application
 
 ```
