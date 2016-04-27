@@ -233,6 +233,10 @@ Note that, by default, Lab disables linting. To enable linting, you must set opt
 
 ## Release & deployment
 
+### Configuration
+
+We use [Config](https://github.com/lorenwest/node-config) node library.
+
 ### Heroku pipeline
 
 TODO
