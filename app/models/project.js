@@ -1,12 +1,15 @@
 'use strict';
 
 const db = require('../middlewares/db').db();
+const Uuid = require('uuid');
 
 module.exports.empty = function () {
 
     return new Promise((resolve, reject) => {
 
-        db.cypher({ query: 'MATCH (p:Project) DELETE p' }, (err) => {
+        db.cypher({
+            query: 'MATCH (p:Project) DELETE p'
+        }, (err) => {
 
             if (err) {
                 return reject(err);
@@ -20,20 +23,20 @@ module.exports.persist = function (project) {
 
     return new Promise((resolve, reject) => {
 
+        project.uuid = Uuid.v4();
         db.cypher({
-            query: '' +
-            'MERGE (id:UniqueId{name:"Project"}) ' +
-            'ON CREATE SET id.count = 1 ' +
-            'ON MATCH SET id.count = id.count + 1 ' +
-            'WITH id.count AS uid ' +
-            'CREATE (p:Project { id: uid, name: "' + project.name + '", client: "' + project.client + '" }) ' +
-            'RETURN p.id AS id, p.name AS name, p.client AS client, p.image AS image'
-        }, (err, persistedProject) => {
+            query: 'CREATE (p:Project { props } ) RETURN p',
+            params: {
+                props: project
+            },
+            lean: true
+        }, (err, results) => {
 
             if (err) {
                 return reject(err);
             }
-            resolve(persistedProject);
+            const project = results[0]['p'];
+            resolve(project);
         });
     });
 };
@@ -43,16 +46,19 @@ module.exports.merge = function (project) {
     return new Promise((resolve, reject) => {
 
         db.cypher({
-            query: '' +
-            'MATCH (p:Project { id: ' + project.id + ' }) ' +
-            'SET p.name = "' + project.name + '", p.client = "' + project.client + '", p.image = "' + project.image + '" ' +
-            'RETURN p.id AS id, p.name AS name, p.client AS client, p.image AS image'
-        }, (err, projects) => {
+            query: 'MATCH (p:Project { uuid: { uuid } }) SET p += { props } RETURN p',
+            params: {
+                uuid: project.uuid,
+                props: project
+            },
+            lean: true
+        }, (err, results) => {
 
             if (err) {
                 return reject(err);
             }
-            resolve(projects[0]);
+            const project = results[0]['p'];
+            resolve(project);
         });
     });
 };
@@ -62,16 +68,16 @@ module.exports.get = function (projectId) {
     return new Promise((resolve, reject) => {
 
         db.cypher({
-            query: '' +
-            'MATCH (p:Project {id: ' + projectId + '}) ' +
-            'RETURN p.id AS id, p.name AS name, p.client AS client, p.image AS image ' +
-            'LIMIT 1'
-        }, (err, projects) => {
+            query: 'MATCH (p:Project { uuid: { uuid } }) RETURN p',
+            params: { uuid: projectId },
+            lean: true
+        }, (err, results) => {
 
             if (err) {
                 return reject(err);
             }
-            resolve(projects[0]);
+            const project = results[0]['p'];
+            resolve(project);
         });
     });
 };
@@ -81,12 +87,16 @@ module.exports.list = function () {
     return new Promise((resolve, reject) => {
 
         db.cypher({
-            query: 'MATCH (p:Project) RETURN p.id AS id, p.name AS name, p.client AS client, p.image AS image'
-        }, (err, projects) => {
+            query: 'MATCH (p:Project) RETURN p',
+            lean: true
+        }, (err, results) => {
 
             if (err) {
                 return reject(err);
             }
+            const projects = results.map((result) => {
+                return result['p'];
+            });
             resolve(projects);
         });
     });
@@ -97,7 +107,9 @@ module.exports.del = function (projectId) {
     return new Promise((resolve, reject) => {
 
         db.cypher({
-            query: 'MATCH (p:Project {id: ' + projectId + '}) DELETE p'
+            query: 'MATCH (p:Project { uuid: { uuid } }) DELETE p',
+            params: { uuid: projectId },
+            lean: true
         }, (err) => {
 
             if (err) {

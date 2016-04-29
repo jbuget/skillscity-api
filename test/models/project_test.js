@@ -1,24 +1,25 @@
 'use strict';
 
-// Setup Lab in BDD mode
 const Lab = require('lab');
 const lab = exports.lab = Lab.script();
 const describe = lab.describe;
 const it = lab.it;
 const afterEach = lab.afterEach;
 
-// Setup Sinon + Chai in BDD mode
 const Sinon = require('sinon');
 const Chai = require('chai');
 Chai.should();
 Chai.use(require('sinon-chai'));
 Chai.use(require('chai-as-promised'));
 
-// Setup Proxyquire to manage dependency innjection
 const Proxyquire = require('proxyquire');
+
+const Uuid = require('uuid');
 
 describe('Project model object', () => {
 
+    const projectUuid = '109156be-c4fb-41ea-b1b4-efe1671c5836';
+    const uuid = Sinon.stub(Uuid, 'v4').returns(projectUuid);
     const cypher = Sinon.stub();
     const Project = Proxyquire('../../app/models/project', {
 
@@ -40,33 +41,31 @@ describe('Project model object', () => {
 
     describe('#persist', () => {
 
-        const newProject = {
-            id: null,
-            name: 'project_name',
-            client: 'client_name',
-            image: 'http://image.url'
-        };
-
         it('should store the new project in database with a generated ID', () => {
             // given
+            const newProject = {
+                name: 'foo',
+                client: 'bar'
+            };
+
             const createdProject = Object.assign({}, newProject);
-            createdProject.id = 123;
-            cypher.callsArgWith(1, null, createdProject);
+            createdProject.uuid = projectUuid;
+
+            const neo4jResults = [{ p: createdProject }];
+            cypher.callsArgWith(1, null, neo4jResults);
 
             // when
             const actual = Project.persist(newProject);
 
             // then
             cypher.should.have.been.calledWith({
-                query: '' +
-                'MERGE (id:UniqueId{name:"Project"}) ' +
-                'ON CREATE SET id.count = 1 ' +
-                'ON MATCH SET id.count = id.count + 1 ' +
-                'WITH id.count AS uid ' +
-                'CREATE (p:Project { id: uid, name: "project_name", client: "client_name" }) ' +
-                'RETURN p.id AS id, p.name AS name, p.client AS client, p.image AS image'
+                query: 'CREATE (p:Project { props } ) RETURN p',
+                params: {
+                    props: createdProject
+                },
+                lean: true
             });
-            return actual.should.eventually.equal(createdProject);
+            return actual.should.eventually.deep.equal(createdProject);
         });
 
         it('should throw an error in case of exception', () => {
@@ -75,7 +74,7 @@ describe('Project model object', () => {
             cypher.callsArgWith(1, err);
 
             // when
-            const actual = Project.persist(newProject);
+            const actual = Project.persist({});
 
             // then
             return actual.should.be.rejectedWith(err);
@@ -84,27 +83,27 @@ describe('Project model object', () => {
 
     describe('#get', () => {
 
-        it('should fetch a single project by its ID', () => {
+        it('should fetch a single project by its UUID', () => {
             // given
             const project = {
-                id: 123,
+                uuid: projectUuid,
                 name: 'project_name',
                 client: 'client_name',
                 image: 'http://image.url'
             };
-            cypher.callsArgWith(1, null, [project]);
+            const neo4jResults = [{ p: project }];
+            cypher.callsArgWith(1, null, neo4jResults);
 
             // when
-            const actual = Project.get(project.id);
+            const actual = Project.get(projectUuid);
 
             // then
             cypher.should.have.been.calledWith({
-                query: '' +
-                'MATCH (p:Project {id: 123}) ' +
-                'RETURN p.id AS id, p.name AS name, p.client AS client, p.image AS image ' +
-                'LIMIT 1'
+                query: 'MATCH (p:Project { uuid: { uuid } }) RETURN p',
+                params: { uuid: projectUuid },
+                lean: true
             });
-            return actual.should.eventually.equal(project);
+            return actual.should.eventually.deep.equal(project);
         });
 
         it('should throw an error in case of exception', () => {
@@ -122,16 +121,18 @@ describe('Project model object', () => {
 
     describe('#del', () => {
 
-        it('should fetch a single project by its ID', () => {
+        it('should delete a project by its UUID', () => {
             // given
             cypher.callsArgWith(1, null, true);
 
             // when
-            const actual = Project.del(1);
+            const actual = Project.del(projectUuid);
 
             // then
             cypher.should.have.been.calledWith({
-                query: 'MATCH (p:Project {id: 1}) DELETE p'
+                query: 'MATCH (p:Project { uuid: { uuid } }) DELETE p',
+                params: { uuid: projectUuid },
+                lean: true
             });
             return actual.should.eventually.equal(true);
         });
@@ -152,23 +153,29 @@ describe('Project model object', () => {
 
     describe('#list', () => {
 
-        it('should fetch a single project by its ID', () => {
+        it('should return all the projects', () => {
             // given
-            const projects = [
-                { id: 1, name: 'project_1', client: 'client_2', image: 'http://img.1' },
-                { id: 2, name: 'project_2', client: 'client_2', image: 'http://img.2' },
-                { id: 3, name: 'project_3', client: 'client_3', image: 'http://img.3' }
+            const neo4jResults = [
+                { p: { uuid: 1, name: 'project_1', client: 'client_2', image: 'http://img.1' } },
+                { p: { uuid: 2, name: 'project_2', client: 'client_2', image: 'http://img.2' } },
+                { p: { uuid: 3, name: 'project_3', client: 'client_3', image: 'http://img.3' } }
             ];
-            cypher.callsArgWith(1, null, projects);
+            const expectedProjects = [
+                { uuid: 1, name: 'project_1', client: 'client_2', image: 'http://img.1' },
+                { uuid: 2, name: 'project_2', client: 'client_2', image: 'http://img.2' },
+                { uuid: 3, name: 'project_3', client: 'client_3', image: 'http://img.3' }
+            ];
+            cypher.callsArgWith(1, null, neo4jResults);
 
             // when
             const actual = Project.list();
 
             // then
             cypher.should.have.been.calledWith({
-                query: 'MATCH (p:Project) RETURN p.id AS id, p.name AS name, p.client AS client, p.image AS image'
+                query: 'MATCH (p:Project) RETURN p',
+                lean: true
             });
-            return actual.should.eventually.equal(projects);
+            return actual.should.eventually.deep.equal(expectedProjects);
         });
 
         it('should throw an error in case of exception', () => {
@@ -187,28 +194,31 @@ describe('Project model object', () => {
 
     describe('#merge', () => {
 
-        const project = {
-            id: 123,
-            name: 'new_project_name',
-            client: 'new_client_name',
-            image: 'http://new.image.url'
-        };
-
         it('should update the project', () => {
             // given
-            cypher.callsArgWith(1, null, [project]);
+            const project = {
+                uuid: projectUuid,
+                name: 'new_project_name',
+                client: 'new_client_name',
+                image: 'http://new.image.url'
+            };
+            const neo4jResults = [{ p: project }];
+
+            cypher.callsArgWith(1, null, neo4jResults);
 
             // when
             const actual = Project.merge(project);
 
             // then
             cypher.should.have.been.calledWith({
-                query: '' +
-                'MATCH (p:Project { id: ' + project.id + ' }) ' +
-                'SET p.name = "' + project.name + '", p.client = "' + project.client + '", p.image = "' + project.image + '" ' +
-                'RETURN p.id AS id, p.name AS name, p.client AS client, p.image AS image'
+                query: 'MATCH (p:Project { uuid: { uuid } }) SET p += { props } RETURN p',
+                params: {
+                    uuid: projectUuid,
+                    props: project
+                },
+                lean: true
             });
-            return actual.should.eventually.equal(project);
+            return actual.should.eventually.deep.equal(project);
         });
 
         it('should throw an error in case of exception', () => {
@@ -217,7 +227,7 @@ describe('Project model object', () => {
             cypher.callsArgWith(1, err);
 
             // when
-            const actual = Project.merge(project);
+            const actual = Project.merge({});
 
             // then
             return actual.should.be.rejectedWith(err);
