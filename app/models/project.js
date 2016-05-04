@@ -35,8 +35,7 @@ module.exports.persist = function (project) {
             if (err) {
                 return reject(err);
             }
-            const project = results[0]['p'];
-            resolve(project);
+            resolve(results[0].p);
         });
     });
 };
@@ -57,8 +56,7 @@ module.exports.merge = function (project) {
             if (err) {
                 return reject(err);
             }
-            const project = results[0]['p'];
-            resolve(project);
+            resolve(results[0].p);
         });
     });
 };
@@ -76,8 +74,7 @@ module.exports.get = function (projectId) {
             if (err) {
                 return reject(err);
             }
-            const project = results[0]['p'];
-            resolve(project);
+            resolve(results[0].p);
         });
     });
 };
@@ -95,7 +92,8 @@ module.exports.list = function () {
                 return reject(err);
             }
             const projects = results.map((result) => {
-                return result['p'];
+
+                return result.p;
             });
             resolve(projects);
         });

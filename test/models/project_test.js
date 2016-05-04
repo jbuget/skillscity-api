@@ -19,7 +19,7 @@ const Uuid = require('uuid');
 describe('Project model object', () => {
 
     const projectUuid = '109156be-c4fb-41ea-b1b4-efe1671c5836';
-    const uuid = Sinon.stub(Uuid, 'v4').returns(projectUuid);
+    Sinon.stub(Uuid, 'v4').returns(projectUuid);
     const cypher = Sinon.stub();
     const Project = Proxyquire('../../app/models/project', {
 
