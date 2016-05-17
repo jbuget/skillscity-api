@@ -2,7 +2,7 @@
 
 [![Heroku](https://heroku-badge.herokuapp.com/?app=floating-shore-97213)](https://floating-shore-97213.herokuapp.com/)
 [![Build Status](https://travis-ci.org/jbuget/stacks-api.svg?branch=master)](https://travis-ci.org/jbuget/skillscity-api)
-[![bitHound Overall Score](https://www.bithound.io/github/jbuget/stacks-api/badges/score.svg)](https://www.bithound.io/github/jbuget/stacks-api)
+[![bitHound Overall Score](https://www.bithound.io/github/jbuget/stacks-api/badges/score.svg)](https://www.bithound.io/github/jbuget/skillscity-api)
 [![bitHound Dependencies](https://www.bithound.io/github/jbuget/stacks-api/badges/dependencies.svg)](https://www.bithound.io/github/jbuget/stacks-api/master/dependencies/npm)
 [![bitHound Dev Dependencies](https://www.bithound.io/github/jbuget/stacks-api/badges/devDependencies.svg)](https://www.bithound.io/github/jbuget/stacks-api/master/dependencies/npm)
 
@@ -25,7 +25,7 @@ $ docker pull neo4j
 Run a Neo4j container :
 
 ```
-$ docker run --detach --publish 7474:7474 --volume ~/neo4j/data:/data neo4j 
+$ docker run --detach --publish 7474:7474 --volume ~/neo4j/data:/data neo4j
 ```
 
 In your browser, access [Neo4j Web console](http://192.168.99.100:7474) and change your neo4j account password in order to activate it.
